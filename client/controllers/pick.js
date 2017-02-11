@@ -30,22 +30,51 @@ angular.module('Music-Dictators').controller('pickSelectionCtrl', function($scop
         pickId: 1
       }
     ],
-    picks: [
-      {
-        url: 'img/poli/hitler.jpeg',
-        enabled: true,
-        pickId: 0,
-        powerName: 'Freeze',
-        powerDescription: "Freezes the shit out of that ball :D"
-      },
-      {
-        url: 'img/poli/marx.jpeg',
-        enabled: false,
-        pickId: 1,
-        powerName: 'Power up',
-        powerDescription: "Rewards are now doubled :O"
-      }
-    ]
+    picks:
+      [
+        {
+          "name": "Rajoy",
+          "url": "img/poli/rajoy.jpg",
+          "pickId": 7,enabled: true,
+          "powerName": "Skip song",
+          "powerDescription": "Plays the next song"
+        },
+        {
+          "name": "Merkel",
+          "url": "img/poli/merkel.jpg",
+          "pickId": 8,enabled: true,
+          "powerName": "Loan",
+          "powerDescription": "Moves the ball to you by a certain distance and after 5 seconds it moves it double the distant into opponents direction"
+        },
+        {
+          "name": "Trump",
+          "url": "img/poli/trump.jpg",
+          "pickId": 9,enabled: true,
+          "powerName": "Wall",
+          "powerDescription": "Ball changes direction with -2 to it's speed"
+        },
+        {
+          "name": "Hitler",
+          "url": "img/poli/hitler.jpeg",
+          "pickId": 10,enabled: true,
+          "powerName": "Torture",
+          "powerDescription": "Responses are now visible to everyone"
+        },
+        {
+          "name": "Sarkozy",
+          "url": "img/poli/sarkozy.jpg",
+          "pickId": 11,enabled: true,
+          "powerName": "Mute song",
+          "powerDescription": "Stops the audio of the current song for 5 seconds"
+        },
+        {
+          "name": "Bush",
+          "url": "img/poli/bush.jpg",
+          "pickId": 12,enabled: true,
+          "powerName": "Libreation",
+          "powerDescription": "Copies a random ultimate from and opponent"
+        }
+      ]
   };
   // start socket
   socket.con();
@@ -73,6 +102,7 @@ angular.module('Music-Dictators').controller('pickSelectionCtrl', function($scop
   $scope.showDetails = function(item) {
     $scope.details = {
       show: true,
+      name: item.name,
       content: item.powerName + ': ' + item.powerDescription
     };
   };

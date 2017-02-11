@@ -1,0 +1,91 @@
+{
+  "left": [
+    {
+      "name": "Marx",
+      "url": "img/poli/marx.jpeg",
+      "pickId": 1,
+      "powerName": "Freeze",
+      "powerDescription": "Freezes the shit out of that ball :D"
+    },
+    {
+      "name": "Putin",
+      "url": "img/poli/putin.jpg",
+      "pickId": 2,
+      "powerName": "Speed up",
+      "powerDescription": "Speed up the ball by 2 units if the ball is going to the other team"
+    },
+    {
+      "name": "Kim Jong-un",
+      "url": "img/poli/kimChino.jpg",
+      "pickId": 3,
+      "powerName": "Jitaneishon",
+      "powerDescription": "Copies a random ultimate from and opponent"
+    },
+    {
+      "name": "Maduro",
+      "url": "img/poli/maduro.jpg",
+      "pickId": 4,
+      "powerName": "Previous song",
+      "powerDescription": "Reproduces the previous song"
+    },
+    {
+      "name": "Pablo Iglesias",
+      "url": "img/poli/pablo.jpg",
+      "pickId": 5,
+      "powerName": "Power Up",
+      "powerDescription": "Rewards are now doubled"
+    },
+    {
+      "name": "Fidel",
+      "url": "img/poli/fidel.jpg",
+      "pickId": 6,
+      "powerName": "Power Down",
+      "powerDescription": "Rewards are now halved"
+    }
+  ],
+  "right": [
+    {
+      "name": "Rajoy",
+      "url": "img/poli/rajoy.jpg",
+      "pickId": 7,
+      "powerName": "Skip song",
+      "powerDescription": "Plays the next song"
+    },
+    {
+      "name": "Merkel",
+      "url": "img/poli/merkel.jpg",
+      "pickId": 8,
+      "powerName": "Loan",
+      "powerDescription": "Moves the ball to you by a certain distance and after 5 seconds it moves it double the distant into opponents direction"
+    },
+    {
+      "name": "Trump",
+      "url": "img/poli/trump.jpg",
+      "pickId": 9,
+      "powerName": "Wall",
+      "powerDescription": "Ball changes direction with -2 to it's speed"
+    },
+    {
+      "name": "Hitler",
+      "url": "img/poli/hitler.jpeg",
+      "pickId": 10,
+      "powerName": "Torture",
+      "powerDescription": "Responses are now visible to everyone"
+    },
+    {
+      "name": "Sarkozy",
+      "url": "img/poli/sarkozy.jpg",
+      "pickId": 11,
+      "powerName": "Mute song",
+      "powerDescription": "Stops the audio of the current song for 5 seconds"
+    },
+    {
+      "name": "Bush",
+      "url": "img/poli/bush.jpg",
+      "pickId": 12,
+      "powerName": "Libreation",
+      "powerDescription": "Copies a random ultimate from and opponent"
+    }
+  ]
+}
+
