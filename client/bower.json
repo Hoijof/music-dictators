@@ -8,7 +8,7 @@
   "main": "app.js",
   "license": "MIT",
   "dependencies": {
-    "angular": "latest",
+    "angular": "1.3.20",
     "satellizer": "~0.9.4",
     "angular-ui-router": "~0.2.13",
     "angular-resource": "~1.3.15",
