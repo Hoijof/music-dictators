@@ -2,12 +2,16 @@ module.exports = function(io, User, Message, Game, moment) {
 
 	// import game loop and init
 	var gamesLogic = require('./gameModule');
+	var Team = require('../libs/team').Team
+  var Player = require('../libs/player').Player
 	gamesLogic.start(io, Game);
 
 	// module vars
 	var connectedUsers = {};
 	var games = {};
 	var gameId = 0;
+	var teamId = 0;
+	var playerId = 0;
 
 	// on connect event handeler
 	io.on('connection', function(socket) {
@@ -109,9 +113,15 @@ module.exports = function(io, User, Message, Game, moment) {
 		// socket create game
 		socket.on('new game', function(data, callback) {
 			games[gameId] = {
-				maker : data,
-				socket : socket
+				maker : data
 			};
+      games[gameId].team1 = new Team(io, gameId, teamId)
+      teamId++;
+      games[gameId].team2 = new Team(io, gameId, teamId)
+      teamId++;
+      var player = new Player(gameId, socket, data)
+      games[gameId].team1.addPlayer(player)
+      socket.join(gameId)
 			callback(gameId);
 			gameId++;
 			refreshGames();
@@ -125,12 +135,12 @@ module.exports = function(io, User, Message, Game, moment) {
 
 		// socket join existing game
 		socket.on('join game', function(data) {
-			var sk1 = games[data.gameId].socket;
-			var sk2 = socket;
-			sk1.join(data.gameId);
-			sk2.join(data.gameId);
+			var game = games[data.gameId]
+      var player = new Player(data.gameId, socket, data.user)
+      game.team2.addPlayer(player)
+      socket.join(data.gameId);
 			io.to(data.gameId).emit('lets play');
-			gamesLogic.pushGame(data.gameId, sk1, sk2, games[data.gameId].maker, data.user);
+			gamesLogic.pushGame(data.gameId, game.team1, game.team2);
 			delete games[data.gameId];
 			refreshGames();
 		});
@@ -211,5 +221,4 @@ module.exports = function(io, User, Message, Game, moment) {
 			io.sockets.emit('users', users);
 		});
 	}
-
 };
