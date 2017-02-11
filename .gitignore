@@ -2,3 +2,4 @@
 .idea/
 client/bower_components/
 server/node_modules/
+server/npm-debug.log
