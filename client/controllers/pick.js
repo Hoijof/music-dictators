@@ -5,6 +5,10 @@
 angular.module('Music-Dictators').controller('pickSelectionCtrl', function($scope, $auth, $alert, $aside, $upload, Account, socket, $location) {
   $scope.messages = [];
 
+  $scope.details = {
+    show: false
+  };
+
   $scope.portraits = {
     team: [
       {
@@ -30,12 +34,16 @@ angular.module('Music-Dictators').controller('pickSelectionCtrl', function($scop
       {
         url: 'img/poli/hitler.jpeg',
         enabled: true,
-        pickId: 0
+        pickId: 0,
+        powerName: 'Freeze',
+        powerDescription: "Freezes the shit out of that ball :D"
       },
       {
         url: 'img/poli/marx.jpeg',
         enabled: false,
-        pickId: 1
+        pickId: 1,
+        powerName: 'Power up',
+        powerDescription: "Rewards are now doubled :O"
       }
     ]
   };
@@ -62,4 +70,16 @@ angular.module('Music-Dictators').controller('pickSelectionCtrl', function($scop
     $scope.portraits[data.team][data.playerId].pickId = data.pickId;
   });
 
+  $scope.showDetails = function(item) {
+    $scope.details = {
+      show: true,
+      content: item.powerName + ': ' + item.powerDescription
+    };
+  };
+
+  $scope.hideDetails = function() {
+    $scope.details = {
+      show: false
+    }
+  };
 });

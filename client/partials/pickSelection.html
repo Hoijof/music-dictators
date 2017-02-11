@@ -8,9 +8,14 @@
   </section>
   <section class="c">
     <div class="pnl box2 box-green gameboard">
-      <div class="picksPortrait cursor"
+      <div class="picksPortrait"
            ng-repeat="portrait in portraits.picks"
-           ng-class="{disabled: !portrait.enabled}"
+           ng-class="{
+            disabled: !portrait.enabled,
+            cursor: portrait.enabled
+            }"
+           ng-mouseenter="showDetails(portrait  )"
+           ng-mouseleave="hideDetails()"
            ng-click="pick(portrait)">
         <img ng-src="{{portrait.url}}">
       </div>
@@ -23,4 +28,7 @@
       </div>
     </div>
   </section>
+</div>
+<div id="pickDetails" class="box2 box-green gameboard pickDetails" ng-show="details.show">
+  {{ details.content }}
 </div>
