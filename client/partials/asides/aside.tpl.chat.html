@@ -1,0 +1,28 @@
+<div class="aside" tabindex="-1" role="dialog" ng-controller="messageCtrl">
+	<div class="box2 box-purple">
+		<div class="head2" ng-show="title">
+			<h4 class="aside-title" ng-bind="title"></h4>
+			<span class="closeBtn" ng-click="$hide()">X</span>
+		</div>
+		<div class="body">
+			<perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="5" refresh-on-change="messages">
+			<div class="fGroup3" ng-repeat="(key, value) in messages" ng-class="{'from' : value.from == user._id, 'to' : value.from == to._id}"
+				ng-if="(value.from == user._id && value.to == to._id) || (value.from == to._id && value.to == user._id)">
+				<div ng-class="{'box-green' : value.from == user._id, 'box-red' : value.from == to._id}">
+					<span class="body">{{value.message}}</span>
+				</div>
+			</div>
+			</perfect-scrollbar>
+		</div>
+		<div class="footer">
+			<form>
+				<div class="fGroup2">
+					<input class="ipt-purple" type="text" ng-model="messageToSend" placeholder="" autofocus />
+				</div>
+				<div class="fGroup2">
+					<input type="submit" ng-disabled="signupForm.$invalid" class="btn-purple" ng-click="sendMessage()" value="Send" />
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

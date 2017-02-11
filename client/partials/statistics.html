@@ -1,0 +1,15 @@
+<section class="c">
+	<div class="pnl box2 box-green gameboard">
+		<div class="head2">Statistics</div>
+		<div class="body">
+			<perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="5" refresh-on-change="games">
+			<div class="chartContainer">
+				<canvas id="pie" class="chart chart-pie" data="winData" labels="winLabel"></canvas>
+			</div>
+			<div class="chartContainer">
+				<canvas id="line" class="chart chart-line" data="gamesData" labels="labels" options="gamesOptions" legend="false" series="series" click="onClick"></canvas>
+			</div>
+			</perfect-scrollbar>
+		</div>
+	</div>
+</section>

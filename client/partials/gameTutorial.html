@@ -1,0 +1,32 @@
+<div>
+	<div id="gameTutorial">
+		<canvas id="tutorialMessagesCanvas" class="box1">
+			</canvas>
+		<div id="canvasInfo" class="box1 box-green on">
+			<canvas id="panelCanvas" class="box1">
+			</canvas>
+			<canvas id="imgCanvas" class="box1">
+			</canvas>
+
+		</div>
+		<div id="canvasBox" class="box1 box-blue on">
+			<canvas id="backgroundCanvas" class="box1">
+			</canvas>
+			<canvas id="particlesCanvas" class="box1">
+			</canvas>
+			<canvas id="unitsCanvas" class="box1">
+			</canvas>
+			<canvas id="enemiesCanvas" class="box1">
+			</canvas>
+			<canvas id="gameCanvas" class="box1">
+			</canvas>
+		</div>
+	</div>
+	<div class="fGroup2">
+		<input id="buttonNext" type="button" class="btn-yellow" value="next" ng-click="nextStep()" />
+	</div>
+	<form class="ipt-game">
+		<input type="text" id="words" ng-model="words" autocomplete="off" />
+		<input type="submit" ng-click="sendWords()" />
+	</form>
+</div>

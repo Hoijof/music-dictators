@@ -1,0 +1,25 @@
+<div class="aside" tabindex="-1" role="dialog" ng-controller="messageCtrl">
+	<div class="box2 box-purple">
+		<div class="head2" ng-show="title">
+			<h4 class="aside-title" ng-bind="title"></h4>
+			<span class="closeBtn" ng-click="$hide()">X</span>
+		</div>
+		<div class="body">
+			<form method="post" ng-submit="updateProfile()">
+				<div class="fGroup2">
+					<input type="text" class="ipt-purple" ng-model="user.userName" placeholder="User Name" />
+				</div>
+				<div class="fGroup2">
+					<input type="email" class="ipt-purple" ng-model="user.email" placeholder="Email" />
+				</div>
+				<div class="fGroup2">
+					<input type="button" class="btn-purple" ng-file-select ng-file-change="upload($files)" accept="image/*" value="Change Picture" />
+				</div>
+				<div class="fGroup2">
+					<input type="submit" class="btn-purple" value="Update">
+				</div>
+			</form>
+
+		</div>
+	</div>
+</div>

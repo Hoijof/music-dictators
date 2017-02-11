@@ -1,0 +1,13 @@
+<section class="r" id="chat">
+	<div class="pnl box2 box-yellow users">
+		<div class="head2">Users</div>
+		<div class="body">
+		<perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="5" refresh-on-change="users">
+			<div class="fGroup3 user" ng-repeat="(key, value) in users" ng-if="value._id != user._id" >
+				<input type="button" class="btn-yellow" ng-class="newMessageAlert[value._id] ? 'on' : ''" ng-click="chat(value)" value="{{value.userName}}" />
+				<span class="connectMark" ng-class="value.connected ? 'connected' : 'disconnected'" ></span>
+			</div>
+			</perfect-scrollbar>
+		</div>
+	</div>
+</section>

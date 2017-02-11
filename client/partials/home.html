@@ -1,0 +1,53 @@
+<div class="container" ng-controller="LoginCtrl">
+	<div class="home box1 box-green">
+		<div class="head1">
+			<span>Log in</span>
+		</div>
+		<div class="body">
+			<form method="post" ng-submit="login()" name="loginForm">
+				<div class="fGroup1">
+					<input class="ipt-green" type="email" name="email" ng-model="email" placeholder="Email" autocomplete="off" required autofocus />
+				</div>
+
+				<div class="fGroup1">
+					<input class="ipt-green" type="password" name="password" ng-model="password" placeholder="Password" required />
+				</div>
+				<div class="fGroup1">
+					<input class="btn-green" type="submit" ng-disabled="loginForm.$invalid" value="Send" />
+				</div>
+			</form>
+		</div>
+		<span id="loginError"></span>
+	</div>
+</div>
+
+
+<div class="container" ng-controller="SignupCtrl">
+	<div class="home box1 box-blue">
+		<div class="head1">
+			<h2 class="text-center">Sign up</h2>
+		</div>
+		<div class="body">
+			<form method="post" ng-submit="signup()" name="signupForm">
+
+				<div class="fGroup1">
+					<input class="ipt-blue" type="text" name="userName" ng-model="userName" placeholder="Name" autocomplete="off" required />
+				</div>
+
+				<div class="fGroup1">
+					<input class="ipt-blue" type="email" id="email" name="email" ng-model="email" placeholder="Email" autocomplete="off" required />
+				</div>
+
+				<div class="fGroup1">
+					<input class="ipt-blue" type="password" name="password" ng-model="password" placeholder="Password" required />
+				</div>
+
+				<div class="fGroup1">
+					<input class="btn-blue" type="submit" ng-disabled="signupForm.$invalid" value="Send" />
+				</div>
+
+			</form>
+		</div>
+		<span id="signUpError"></span>
+	</div>
+</div>

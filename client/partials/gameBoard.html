@@ -1,0 +1,17 @@
+<section class="c">
+	<div class="pnl box2 box-green gameboard">
+		<div class="head2">Games</div>
+		<div class="body">
+			<div class="box2 box-green" id="gameBoard">
+				<perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="5" refresh-on-change="games" on-scroll="onScroll(scrollTop, scrollHeight)">
+				<div class="fGroup2" ng-repeat="(key, value) in games">
+					<input class="btn-green" type="button" ng-click="joinGame(value.id)" value="Game created by {{value.maker}}" />
+				</div>
+				</perfect-scrollbar>
+			</div>
+			<div class="fGroup2">
+				<input class="btn-green" type="button" ng-click="newGame()" value="Create new Game" />
+			</div>
+		</div>
+	</div>
+</section>
