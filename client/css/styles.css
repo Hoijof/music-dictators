@@ -1,4 +1,17 @@
 /* general */
+
+cursor {
+	cursor: url('../img/cursor.png'), auto;
+}
+
+button, html input[type=button], input[type=reset], input[type=submit] {
+	cursor: url('../img/cursor.png'), auto;
+}
+
+a:hover {
+	cursor: url('../img/cursor.png'), auto;
+}
+
 body {
 	background-color: #000000;
 	font-family: Audiowide;
@@ -437,7 +450,7 @@ text-shadow: 0;
 	position: absolute;
 	top: 8px;
 	right: 15px;
-	cursor: pointer;
+	cursor: url('../img/cursor.png'), auto;
 }
 
 .aside {
