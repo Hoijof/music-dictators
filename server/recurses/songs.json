@@ -1,0 +1,12 @@
+{
+  "songs": [
+    {"id": "0000.mp3",
+      "adele": "artist",
+      "someone like you": "name"
+    },
+    {"id": "0001.mp3",
+      "bryan adams": "artist",
+      "i do it for you": "name"
+    }
+  ]
+}
