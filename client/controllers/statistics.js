@@ -1,4 +1,4 @@
-angular.module('TypeOrDie').controller('statisticsCtrl', function($scope, socket) {
+angular.module('Music-Dictators').controller('statisticsCtrl', function($scope, socket) {
 
 	$scope.$on('$viewContentLoaded', function(event) {
 		getData();

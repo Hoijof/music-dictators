@@ -1,4 +1,4 @@
-angular.module('TypeOrDie').controller('gameBoardCtrl', function($scope, $modal, socket, $location) {
+angular.module('Music-Dictators').controller('gameBoardCtrl', function($scope, $modal, socket, $location) {
 
 	var myModal;
 

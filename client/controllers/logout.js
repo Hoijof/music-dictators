@@ -1,4 +1,4 @@
-angular.module('TypeOrDie').controller('LogoutCtrl', function($scope, $auth, socket) {
+angular.module('Music-Dictators').controller('LogoutCtrl', function($scope, $auth, socket) {
 	if (!$auth.isAuthenticated()) {
 		return;
 	} else {

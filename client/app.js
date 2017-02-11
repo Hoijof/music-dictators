@@ -1,4 +1,4 @@
-var app = angular.module('TypeOrDie', [ 'ui.router', 'mgcrea.ngStrap', 'satellizer', 'angularFileUpload', 'perfect_scrollbar', 'chart.js' ])
+var app = angular.module('Music-Dictators', [ 'ui.router', 'mgcrea.ngStrap', 'satellizer', 'angularFileUpload', 'perfect_scrollbar', 'chart.js' ])
 app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
 	$stateProvider.state('home', {
 		url : '/',
@@ -95,6 +95,23 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
 		url : '/gameTutorial',
 		templateUrl : 'partials/gameTutorial.html',
 		controller : 'gameTutorialCtrl',
+		resolve : {
+			authenticated : function($q, $location, $auth) {
+				var deferred = $q.defer();
+
+				if (!$auth.isAuthenticated()) {
+					$location.path('/');
+				} else {
+					deferred.resolve();
+				}
+
+				return deferred.promise;
+			}
+		}
+	}).state('main.pickSelection', {
+		url : '/pick-selection',
+		templateUrl : 'partials/pickSelection.html',
+		controller : 'pickSelectionCtrl',
 		resolve : {
 			authenticated : function($q, $location, $auth) {
 				var deferred = $q.defer();

@@ -1,4 +1,4 @@
-angular.module('TypeOrDie').controller('SignupCtrl', function($scope, $auth, $alert) { 
+angular.module('Music-Dictators').controller('SignupCtrl', function($scope, $auth, $alert) {
 	$scope.signup = function() {
 		$auth.signup({
 			userName: $scope.userName,

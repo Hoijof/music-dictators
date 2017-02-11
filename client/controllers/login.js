@@ -1,4 +1,4 @@
-angular.module('TypeOrDie').controller('LoginCtrl', function($scope, $auth, $alert) {
+angular.module('Music-Dictators').controller('LoginCtrl', function($scope, $auth, $alert) {
 	$scope.login = function() {
 		$auth.login({ 
 			email: $scope.email,

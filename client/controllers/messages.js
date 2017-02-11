@@ -1,4 +1,4 @@
-angular.module('TypeOrDie').controller('messageCtrl', function($scope, socket) {
+angular.module('Music-Dictators').controller('messageCtrl', function($scope, socket) {
 	
 	// send chat message
 	$scope.sendMessage = function(){

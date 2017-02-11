@@ -1,4 +1,4 @@
-angular.module('TypeOrDie').controller('ProfileCtrl', function($scope, $auth, $alert, $aside, $upload, Account, socket, $location) {
+angular.module('Music-Dictators').controller('ProfileCtrl', function($scope, $auth, $alert, $aside, $upload, Account, socket, $location) {
 	$scope.messages = [];
 
 	// start socket

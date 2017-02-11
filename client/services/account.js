@@ -1,4 +1,4 @@
-angular.module('TypeOrDie')
+angular.module('Music-Dictators')
   .factory('Account', function($http) {
     return {
       getProfile: function() {

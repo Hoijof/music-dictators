@@ -1,4 +1,4 @@
-angular.module('TypeOrDie').controller('NavbarCtrl', function($scope, $auth) {
+angular.module('Music-Dictators').controller('NavbarCtrl', function($scope, $auth) {
 	$scope.isAuthenticated = function() {
 		return $auth.isAuthenticated();
 	};

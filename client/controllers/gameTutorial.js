@@ -1,4 +1,4 @@
-angular.module('TypeOrDie').controller(
+angular.module('Music-Dictators').controller(
 'gameTutorialCtrl',
 function($scope, $modal, $location) {
 

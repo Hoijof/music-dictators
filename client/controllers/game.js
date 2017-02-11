@@ -1,4 +1,4 @@
-angular.module('TypeOrDie').controller('gameCtrl', function($scope, $modal, socket, $location, $auth, $window) {
+angular.module('Music-Dictators').controller('gameCtrl', function($scope, $modal, socket, $location, $auth, $window) {
 
 	// canvas context
 	var ctxBackground;
