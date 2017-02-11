@@ -183,6 +183,7 @@ function Game(gid, sk1, sk2, p1d, p2d) {
 				if (timeLeft < 0) {
 					running = true;
 					start = Date.now();
+                    io.to(id).emit('playSong');
 					player1.newWord();
 					player2.newWord();
 				}

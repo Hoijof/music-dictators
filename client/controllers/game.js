@@ -17,6 +17,8 @@ angular.module('Music-Dictators').controller('gameCtrl', function($scope, $modal
 	var shadowBlur = 20;
 	var explosionParticles = 45;
 	var mobile = false;
+	var canvasReady = false;
+    var songReady = false;
 
 	// game vars
 	var input;
@@ -48,10 +50,12 @@ angular.module('Music-Dictators').controller('gameCtrl', function($scope, $modal
 	
 	$scope.word = '';
 
+
 	$scope.$on('$viewContentLoaded', function(event) {
 		input = document.getElementById('words');
 
 		initCtx();
+		initMusic();
 
 		window.onresize = function() {
 			if ($location.path() === '/game') {
@@ -126,8 +130,29 @@ angular.module('Music-Dictators').controller('gameCtrl', function($scope, $modal
 		auxCtx.textAlign = 'center';
 
 		resizeCanvas();
-		socket.emit('ready');
+		//socket.emit('ready');
+		canvasReady = true;
+		checkIfAllIsReady();
 	};
+	
+	var initMusic = function () {
+		var song = 'http://localhost:3000/files/Adele%20-%20Someone%20Like%20You.mp3';
+		var audioTag = document.getElementById('audioTag');
+		audioTag.src = song;
+		audioTag.type = 'audio/mp3';
+        audioTag.play().then(function(){audioTag.pause(); songReady = true; checkIfAllIsReady();}).catch(function(e){console.log(e)});
+    };
+
+	var checkIfAllIsReady = function(){
+		if(canvasReady && songReady){
+            socket.emit('ready');
+		}
+	};
+
+	socket.on('playSong',  function () {
+        var audioTag = document.getElementById('audioTag');
+        audioTag.play();
+    });
 
 	// canvas resize
 	var resizeCanvas = function() {
