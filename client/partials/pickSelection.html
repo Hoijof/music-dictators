@@ -1,17 +1,26 @@
 <div class="conta">
   <section class="l">
     <div class="pnl box2 box-purple user">
-
+      <div class="playerPortrait" ng-repeat="portrait in portraits.team">
+        <img ng-src="{{portrait.url}}">
+      </div>
     </div>
   </section>
   <section class="c">
     <div class="pnl box2 box-green gameboard">
-
+      <div class="picksPortrait cursor"
+           ng-repeat="portrait in portraits.picks"
+           ng-class="{disabled: !portrait.enabled}"
+           ng-click="pick(portrait)">
+        <img ng-src="{{portrait.url}}">
+      </div>
     </div>
   </section>
   <section class="r" id="chat">
     <div class="pnl box2 box-yellow users">
-
+      <div class="playerPortrait" ng-repeat="portrait in portraits.enemy">
+        <img ng-src="{{portrait.url}}">
+      </div>
     </div>
   </section>
 </div>

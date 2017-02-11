@@ -1,6 +1,6 @@
 /* general */
 
-cursor {
+.cursor {
 	cursor: url('../img/cursor.png'), auto;
 }
 
@@ -505,4 +505,29 @@ text-shadow: 0;
 .nopadding {
 	padding: 0;
 	margin: 0;
+}
+
+
+/* Pick Selection */
+
+.playerPortrait {
+	text-align: center;
+	margin: 10px;
+}
+
+.playerPortrait img {
+	height: 100px;
+}
+
+.picksPortrait img {
+	height: 200px;
+}
+
+.picksPortrait {
+	float: left;
+	margin: 10px;
+}
+
+.picksPortrait.disabled {
+	opacity: 0.3;
 }
