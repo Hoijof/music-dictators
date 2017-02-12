@@ -11,7 +11,7 @@ function Team(io, gameId, teamId, ideology) {
     team.ideology = ideology
     team.players = []
     team.team = []
-    team.maxPlayers = 1
+    team.maxPlayers = 2
     team.full = false
     team.endGame = endGame
     team.addPlayer = addPlayer

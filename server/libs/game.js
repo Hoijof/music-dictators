@@ -89,14 +89,14 @@ function Game(io, gameId, team1, team2) {
 
     if (word === '/power' && player.power === true) {
       switch(player.hero.pickId) {
-        case 2:
+        case 2: case 12:
           if (player.teamId === game.teams[0]) {
             if (game.ball.speed > 0) game.ball.speed += 2;
           } else {
             if (game.ball.speed < 0) game.ball.speed -= 2;
           }
           break;
-        case 9:
+        case 9: case 6:
           game.ball.speed = parseInt((game.ball.speed/2) * -1);
           if (game.ball.speed === 0) {
             if (player.teamId === game.teams[0]) {
@@ -106,10 +106,10 @@ function Game(io, gameId, team1, team2) {
             }
           }
           break;
-        case 7:
+        case 7: case 5:
           playNexSong();
           break;
-        case 8:
+        case 8: case 3:
           if (player.teamId === game.teams[0]) {
             game.ball.position += 200;
           } else {

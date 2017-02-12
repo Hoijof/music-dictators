@@ -20,8 +20,8 @@
       "name": "Kim Jong-un",
       "url": "img/poli/kimChino.jpg",
       "pickId": 3,
-      "powerName": "Jitaneishon",
-      "powerDescription": "Copies a random ultimate from and opponent",
+      "powerName": "Loan",
+      "powerDescription": "Moves the ball to you by a certain distance and after 5 seconds it moves it double the distant into opponents direction",
       "enabled": true
     },
     {
@@ -36,16 +36,16 @@
       "name": "Pablo Iglesias",
       "url": "img/poli/pablo.jpg",
       "pickId": 5,
-      "powerName": "Power Up",
-      "powerDescription": "Rewards are now doubled",
+      "powerName": "Skip song",
+      "powerDescription": "Plays the next song",
       "enabled": true
     },
     {
       "name": "Fidel",
       "url": "img/poli/fidel.jpg",
       "pickId": 6,
-      "powerName": "Power Down",
-      "powerDescription": "Rewards are now halved",
+      "powerName": "Wall",
+      "powerDescription": "Ball changes direction with half to it's speed",
       "enabled": true
     }
   ],
@@ -71,7 +71,7 @@
       "url": "img/poli/trump.jpg",
       "pickId": 9,
       "powerName": "Wall",
-      "powerDescription": "Ball changes direction with -2 to it's speed",
+      "powerDescription": "Ball changes direction with half to it's speed",
       "enabled": true
     },
     {
@@ -94,8 +94,8 @@
       "name": "Bush",
       "url": "img/poli/bush.jpg",
       "pickId": 12,
-      "powerName": "Libreation",
-      "powerDescription": "Copies a random ultimate from and opponent",
+      "powerName": "Speed up",
+      "powerDescription": "Speed up the ball by 2 units if the ball is going to the other team",
       "enabled": true
     }
   ],
