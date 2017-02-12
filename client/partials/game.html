@@ -16,4 +16,14 @@
 	<form class="ipt-game">
 		<input type="text" id="words" ng-model="words" autocomplete="off" /> <input type="submit" ng-click="sendWords()" />
 	</form>
+	<div class="team">
+		<div ng-repeat="player in team">
+			<img ng-src="{{player.url}}">
+		</div>
+	</div>
+	<div class="enemy">
+		<div ng-repeat="player in enemy">
+			<img ng-src="{{player.url}}">
+		</div>
+	</div>
 </div>

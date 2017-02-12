@@ -1,554 +1,577 @@
 /* general */
+.team {
+    position: absolute;
+    left: 0;
+    top: 50px;
+    width: 15%;
+    text-align: center;
+}
+.enemy {
+    position: absolute;
+    right: 0;
+    top: 100px;
+    width: 15%;
+    text-align: center;
+}
+
+.team img, .enemy img {
+    width: 90%;
+    max-width: 150px;
+    height: 150px;
+}
 
 .cursor {
-	cursor: url('../img/cursor.png'), auto;
+    cursor: url('../img/cursor.png'), auto;
 }
 
 button, html input[type=button], input[type=reset], input[type=submit] {
-	cursor: url('../img/cursor.png'), auto;
+    cursor: url('../img/cursor.png'), auto;
 }
 
 a:hover {
-	cursor: url('../img/cursor.png'), auto;
+    cursor: url('../img/cursor.png'), auto;
 }
 
 body {
-	background-color: #000000;
-	font-family: Audiowide;
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
+    background-color: #000000;
+    font-family: Audiowide;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 body * {
-	background-color: transparent;
+    background-color: transparent;
 }
 
 a, a:hover, a:active, a:visited, a:link {
-	text-decoration: none;
+    text-decoration: none;
 }
 
 input:focus {
-	outline: none !important;
+    outline: none !important;
 }
 
 #mainContainer {
-	position: absolute;
-	top: 50px;
-	bottom: 5px;
-	left: 0px;
-	right: 0px;
+    position: absolute;
+    top: 50px;
+    bottom: 5px;
+    left: 0px;
+    right: 0px;
 }
 
 #mainContainer section {
-	height: 100%;
+    height: 100%;
 }
 
 @media screen and (max-width: 700px) {
-	#mainContainer {
-		top: 35px;
-	}
+    #mainContainer {
+        top: 35px;
+    }
 }
 
 /* #################
  * #### nav bar ####
  * ################# */
 .nb {
-	width: 100%;
-	font-size: 20px;
-	line-height: 48px;
-	border-bottom: 2px solid #FF0000;
-	background-color: #000000;
-	z-index: 10;
-	-webkit-transition: all 0.8s;
-	-moz-transition: all 0.8s;
-	transition: all 0.8s;
-	position: fixed;
+    width: 100%;
+    font-size: 20px;
+    line-height: 48px;
+    border-bottom: 2px solid #FF0000;
+    background-color: #000000;
+    z-index: 10;
+    -webkit-transition: all 0.8s;
+    -moz-transition: all 0.8s;
+    transition: all 0.8s;
+    position: fixed;
 }
 
 .nb:hover {
-	border-bottom: 2px solid #F5A9A9;
+    border-bottom: 2px solid #F5A9A9;
 }
 
 .nb .logout {
-	float: right;
+    float: right;
 }
 
 .nb .home, .nb .logout {
-	padding: 0 20px 0 20px;
-	margin: 0 0 0 0;
-	display: inline-block;
-	width: auto;
+    padding: 0 20px 0 20px;
+    margin: 0 0 0 0;
+    display: inline-block;
+    width: auto;
 }
 
 .nb a {
-	color: #FF0000;
-	-webkit-transition: all 0.8s;
-	-moz-transition: all 0.8s;
-	transition: all 0.8s;
+    color: #FF0000;
+    -webkit-transition: all 0.8s;
+    -moz-transition: all 0.8s;
+    transition: all 0.8s;
 }
 
 .nb a:hover {
-	color: #F5A9A9;
+    color: #F5A9A9;
 }
 
 @media screen and (min-width: 700px) {
-	.nb:hover {
-		box-shadow: 0 5px 5px -5px #F5A9A9, 0 10px 10px -10px #FA5858, 0 15px 15px -15px #FF0000, inset 0 -5px 5px -5px #F5A9A9, inset 0 -10px 10px -10px #FA5858, inset 0 -15px 15px -15px #FF0000;
-	}
+    .nb:hover {
+        box-shadow: 0 5px 5px -5px #F5A9A9, 0 10px 10px -10px #FA5858, 0 15px 15px -15px #FF0000, inset 0 -5px 5px -5px #F5A9A9, inset 0 -10px 10px -10px #FA5858, inset 0 -15px 15px -15px #FF0000;
+    }
 
-	.nb a:hover {
-		color: #FFFFFF;
-		text-shadow: 0 0 5px #FFFFFF, 0 0 10px #F5A9A9, 0 0 20px #F5A9A9, 0 0 40px #FA5858, 0 0 70px #FA5858, 0 0 80px #FF0000, 0 0 100px #FF0000, 0 0 150px #FF0000;
-	}
+    .nb a:hover {
+        color: #FFFFFF;
+        text-shadow: 0 0 5px #FFFFFF, 0 0 10px #F5A9A9, 0 0 20px #F5A9A9, 0 0 40px #FA5858, 0 0 70px #FA5858, 0 0 80px #FF0000, 0 0 100px #FF0000, 0 0 150px #FF0000;
+    }
 }
-@media screen and (max-width: 700px) {
-	.nb {
-		position: fixed;
-		font-size: 18px;
-		line-height: 30px;
-	}
 
-	.container:nth-child(1) {
-		margin-top: 30px;
-	}
+@media screen and (max-width: 700px) {
+    .nb {
+        position: fixed;
+        font-size: 18px;
+        line-height: 30px;
+    }
+
+    .container:nth-child(1) {
+        margin-top: 30px;
+    }
 }
 
 /* #################
  * # login/sign up #
  * #################*/
 .home {
-	margin: 30px auto;
-	width: 100%;
-	max-width: 700px;
+    margin: 30px auto;
+    width: 100%;
+    max-width: 700px;
 }
 
 /* ################
  * ##### game #####
  * ################ */
 .ipt-game {
-	position: absolute;
-	top: 0;
-	opacity: 0;
-	width: 100%;
-	z-index: -1;
+    position: absolute;
+    top: 0;
+    opacity: 0;
+    width: 100%;
+    z-index: -1;
 }
 
 .ipt-game input {
-	width: 100%;
-	font-size: 20px;
+    width: 100%;
+    font-size: 20px;
 }
 
 #canvasBox, #canvasInfo, #gameTutorial {
-	position: relative;
-	display: block;
-	width: 70%;
-	margin: 10px auto 0 auto;
-	z-index: 3;
-	-webkit-transition: all 0s;
-	-moz-transition: all 0s;
-	transition: all 0s;
-	text-align: center;
-	padding: 10px;
+    position: relative;
+    display: block;
+    width: 70%;
+    margin: 10px auto 0 auto;
+    z-index: 3;
+    -webkit-transition: all 0s;
+    -moz-transition: all 0s;
+    transition: all 0s;
+    text-align: center;
+    padding: 10px;
 }
 
 #gameTutorial {
-	width: 80%;
+    width: 80%;
 }
 
-#gameTutorial #canvasBox, #gameTutorial #canvasInfo{
-	width: 100%;
-	z-index: -1;
+#gameTutorial #canvasBox, #gameTutorial #canvasInfo {
+    width: 100%;
+    z-index: -1;
 }
 
-#canvasBox canvas, #canvasInfo canvas, #gameTutorial canvas{
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
+#canvasBox canvas, #canvasInfo canvas, #gameTutorial canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 @media screen and (max-width: 700px) {
-	#canvasBox, #canvasInfo {
-		width: 95%;
-	}
+    #canvasBox, #canvasInfo {
+        width: 95%;
+    }
 }
 
 /* #################
  * #### profile ####
  * ################# */
 .conta {
-	position: relative;
-	width: 100%;
-	height: 100%;
-	padding: 0;
-	margin: 0;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
 }
 
 .l {
-	position: relative;
-	display: inline-block;
-	width: 20%;
-	float: left;
+    position: relative;
+    display: inline-block;
+    width: 20%;
+    float: left;
 }
 
 .c {
-	position: relative;
-	display: inline-block;
-	width: 60%;
-	float: left;
+    position: relative;
+    display: inline-block;
+    width: 60%;
+    float: left;
 }
 
 .r {
-	position: relative;
-	display: inline-block;
-	width: 20%;
+    position: relative;
+    display: inline-block;
+    width: 20%;
 }
 
 .pnl {
-	position: absolute;
-	top: 5px;
-	left: 5px;
-	right: 5px;
-	bottom: 5px;
-	margin: 0;
-	padding: 5px;
-	float: left;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    margin: 0;
+    padding: 5px;
+    float: left;
 }
 
 .pnl .body {
-	position: absolute;
-	top: 50px;
-	bottom: 5px;
-	left: 5px;
-	right: 5px;
+    position: absolute;
+    top: 50px;
+    bottom: 5px;
+    left: 5px;
+    right: 5px;
 }
 
 .body .info {
-	width: 100%;
-	padding: 10px;
+    width: 100%;
+    padding: 10px;
 }
 
 #profileImg {
-	width: 80%;
-	margin: 20px auto;
+    width: 80%;
+    margin: 20px auto;
 }
 
 #profileImg img {
-	margin: 0 auto;
+    margin: 0 auto;
 }
 
 #gameBoard {
-	position: relative;
-	display: block;
-	width: 90%;
-	height: 60%;
-	margin: 20px auto;
-	border-radius: 5px;
-	padding-top: 10px;
+    position: relative;
+    display: block;
+    width: 90%;
+    height: 60%;
+    margin: 20px auto;
+    border-radius: 5px;
+    padding-top: 10px;
 }
 
 #chat .user {
-	position: relative;
+    position: relative;
 }
 
 .connectMark {
-	position: absolute;
-	right: 10%;
-	top: 10px;
-	display: block;
-	width: 5px;
-	height: 5px;
-	border-radius: 2px;
+    position: absolute;
+    right: 10%;
+    top: 10px;
+    display: block;
+    width: 5px;
+    height: 5px;
+    border-radius: 2px;
 }
 
 .connected {
-	background-color: #00FF00;
+    background-color: #00FF00;
 }
 
 .disconnected {
-	background-color: #FF0000;
+    background-color: #FF0000;
 }
 
 .chartContainer {
-	width: 80%;
-	margin: 10px auto;
+    width: 80%;
+    margin: 10px auto;
 }
 
 @media screen and (max-width: 1200px) {
-	.l {
-		width: 30%;
-	}
-	.c {
-		width: 50%;
-	}
+    .l {
+        width: 30%;
+    }
+
+    .c {
+        width: 50%;
+    }
 }
 
 @media screen and (max-width: 700px) {
-	.l, .c, .r {
-		display: block;
-		width: 100%;
-		height: 500px;
-		clear: both;
-	}
+    .l, .c, .r {
+        display: block;
+        width: 100%;
+        height: 500px;
+        clear: both;
+    }
 
-	#mainContainer section {
-		height: 500px;
-	}
-	.aside {
-		width: 100%;
-	}
+    #mainContainer section {
+        height: 500px;
+    }
+
+    .aside {
+        width: 100%;
+    }
 }
 
 /* ################
  * #### modals ####
  ################ */
 .modal-dialog {
-	margin-top: 200px;
-	background-color: #000000;
-	padding: 30px;
+    margin-top: 200px;
+    background-color: #000000;
+    padding: 30px;
 }
 
 .modal-dialog .body {
-	text-align: center;
-	margin: 20px auto;
-	font-size: 50px;
+    text-align: center;
+    margin: 20px auto;
+    font-size: 50px;
 }
 
 .nl {
-	-webkit-animation: kit-anim 1s ease-in infinite;
-	-moz-animation: kit-anim 1s ease-in infinite;
-	animation: kit-anim 1s ease-in infinite;
+    -webkit-animation: kit-anim 1s ease-in infinite;
+    -moz-animation: kit-anim 1s ease-in infinite;
+    animation: kit-anim 1s ease-in infinite;
 }
 
 .nl:nth-child(2) {
-	-webkit-animation-delay: .1s;
-	-moz-animation-delay: .1s;
-	animation-delay: .1s;
+    -webkit-animation-delay: .1s;
+    -moz-animation-delay: .1s;
+    animation-delay: .1s;
 }
 
 .nl:nth-child(3) {
-	-webkit-animation-delay: .2s;
-	-moz-animation-delay: .2s;
-	animation-delay: .2s;
+    -webkit-animation-delay: .2s;
+    -moz-animation-delay: .2s;
+    animation-delay: .2s;
 }
 
 .nl:nth-child(4) {
-	-webkit-animation-delay: .3s;
-	-moz-animation-delay: .3s;
-	animation-delay: .3s;
+    -webkit-animation-delay: .3s;
+    -moz-animation-delay: .3s;
+    animation-delay: .3s;
 }
 
 .nl:nth-child(5) {
-	-webkit-animation-delay: .4s;
-	-moz-animation-delay: .4s;
-	animation-delay: .4s;
+    -webkit-animation-delay: .4s;
+    -moz-animation-delay: .4s;
+    animation-delay: .4s;
 }
 
 .nl:nth-child(6) {
-	-webkit-animation-delay: .5s;
-	-moz-animation-delay: .5s;
-	animation-delay: .5s;
+    -webkit-animation-delay: .5s;
+    -moz-animation-delay: .5s;
+    animation-delay: .5s;
 }
 
 .nl:nth-child(7) {
-	-webkit-animation-delay: .6s;
-	-moz-animation-delay: .6s;
-	animation-delay: .6s;
+    -webkit-animation-delay: .6s;
+    -moz-animation-delay: .6s;
+    animation-delay: .6s;
 }
 
 @-webkit-keyframes kit-anim {
-0% {
-color: #FF00FF;
-text-shadow: 0;
-}
+    0% {
+        color: #FF00FF;
+        text-shadow: 0;
+    }
 
-50% {
-color: #FFFFFF;
-text-shadow: 0 0 5 px #FFFFFF, 0 0 10 px #F5A9F2, 0 0 20 px #F5A9F2, 0 0 40 px #FA58F4, 0 0 70 px #FA58F4, 0 0 80 px #FF00FF, 0 0 100 px #FF00FF, 0 0 150 px #FF00FF;
-}
-100% {
-color: #FF00FF;
-text-shadow: 0;
-}
+    50% {
+        color: #FFFFFF;
+        text-shadow: 0 0 5px #FFFFFF, 0 0 10px #F5A9F2, 0 0 20px #F5A9F2, 0 0 40px #FA58F4, 0 0 70px #FA58F4, 0 0 80px #FF00FF, 0 0 100px #FF00FF, 0 0 150px #FF00FF;
+    }
+    100% {
+        color: #FF00FF;
+        text-shadow: 0;
+    }
 }
 
 @keyframes kit-anim {
-0% {
-color: #FF00FF;
-text-shadow: 0;
-}
+    0% {
+        color: #FF00FF;
+        text-shadow: 0;
+    }
 
-50% {
-color: #FFFFFF;
-text-shadow: 0 0 5 px #FFFFFF, 0 0 10 px #F5A9F2, 0 0 20 px #F5A9F2, 0 0 40 px #FA58F4, 0 0 70 px #FA58F4, 0 0 80 px #FF00FF, 0 0 100 px #FF00FF, 0 0 150 px #FF00FF;
-}
+    50% {
+        color: #FFFFFF;
+        text-shadow: 0 0 5px #FFFFFF, 0 0 10px #F5A9F2, 0 0 20px #F5A9F2, 0 0 40px #FA58F4, 0 0 70px #FA58F4, 0 0 80px #FF00FF, 0 0 100px #FF00FF, 0 0 150px #FF00FF;
+    }
 
-100% {
-color: #FF00FF;
-text-shadow: 0;
-}
+    100% {
+        color: #FF00FF;
+        text-shadow: 0;
+    }
 }
 
 @-moz-keyframes kit-anim {
-0% {
-color: #FF00FF;
-text-shadow: 0;
+    0% {
+        color: #FF00FF;
+        text-shadow: 0;
+    }
+
+    50% {
+        color: #FFFFFF;
+        text-shadow: 0 0 5px #FFFFFF, 0 0 10px #F5A9F2, 0 0 20px #F5A9F2, 0 0 40px #FA58F4, 0 0 70px #FA58F4, 0 0 80px #FF00FF, 0 0 100px #FF00FF, 0 0 150px #FF00FF;
+    }
+
+    100% {
+        color: #FF00FF;
+        text-shadow: 0;
+    }
 }
 
-50% {
-color: #FFFFFF;
-text-shadow: 0 0 5 px #FFFFFF, 0 0 10 px #F5A9F2, 0 0 20 px #F5A9F2, 0 0 40 px #FA58F4, 0 0 70 px #FA58F4, 0 0 80 px #FF00FF, 0 0 100 px #FF00FF, 0 0 150 px #FF00FF;
+.modal table {
+    width: 90%;
+    text-align: center;
+    margin: 0 auto;
 }
 
-100% {
-color: #FF00FF;
-text-shadow: 0;
-}
-}
-
-.modal table{
-	width: 90%;
-	text-align: center;
-	margin: 0 auto;
+.modal th {
+    text-align: center;
+    font-size: 16px;
 }
 
-.modal th{
-	text-align: center;
-	font-size: 16px;
-}
-
-.modal tr:hover{
-	color: #F5A9F2;
+.modal tr:hover {
+    color: #F5A9F2;
 }
 
 @media screen and (min-width: 700px) {
-	.modal tr:hover{
-		color: #FFFFFF;
-		text-shadow: 0 0 5px #FFFFFF, 0 0 10px #F5A9F2, 0 0 20px #F5A9F2, 0 0 40px #FA58F4, 0 0 70px #FA58F4, 0 0 80px #FF00FF, 0 0 100px #FF00FF, 0 0 150px #FF00FF;
-	}
+    .modal tr:hover {
+        color: #FFFFFF;
+        text-shadow: 0 0 5px #FFFFFF, 0 0 10px #F5A9F2, 0 0 20px #F5A9F2, 0 0 40px #FA58F4, 0 0 70px #FA58F4, 0 0 80px #FF00FF, 0 0 100px #FF00FF, 0 0 150px #FF00FF;
+    }
 }
+
 /* #################
  * ### scrollbar ###
  ################# */
 #chatContainer {
-	width: 100%;
-	height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 .scroller {
-	width: 100%;
-	height: 100%;
-	overflow-y: hidden;
-	position: relative;
+    width: 100%;
+    height: 100%;
+    overflow-y: hidden;
+    position: relative;
 }
 
 /* ################
  * #### asides ####
  ################ */
 .closeBtn {
-	position: absolute;
-	top: 8px;
-	right: 15px;
-	cursor: url('../img/cursor.png'), auto;
+    position: absolute;
+    top: 8px;
+    right: 15px;
+    cursor: url('../img/cursor.png'), auto;
 }
 
 .aside {
-	height: 100%;
-	max-width: 100%;
-	background-color: #000000;
-	overflow: hidden;
+    height: 100%;
+    max-width: 100%;
+    background-color: #000000;
+    overflow: hidden;
 }
 
 .aside .box2 {
-	height: 100%;
-	width: 99%;
+    height: 100%;
+    width: 99%;
 }
 
 .aside > .box2 > .body {
-	position: absolute !important;
-	top: 52px;
-	left: 2%;
-	bottom: 86px;
-	width: 95%;
-	background-color: #000000;
+    position: absolute !important;
+    top: 52px;
+    left: 2%;
+    bottom: 86px;
+    width: 95%;
+    background-color: #000000;
 }
 
 .aside .footer {
-	position: absolute;
-	bottom: 10px;
-	width: 100%;
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
 }
 
 .from, .to {
-	display: block;
-	width: 100%;
+    display: block;
+    width: 100%;
 }
 
 .from div, .to div {
-	padding: 5px;
-	border-radius: 5px;
-	overflow: auto;
-	word-wrap: break-word;
+    padding: 5px;
+    border-radius: 5px;
+    overflow: auto;
+    word-wrap: break-word;
 }
 
 .from div {
-	margin-left: 20%;
-	width: 80%;
+    margin-left: 20%;
+    width: 80%;
 }
 
 .to div {
-	margin-right: 20%;
-	border-radius: 5px;
+    margin-right: 20%;
+    border-radius: 5px;
 }
 
 .nopadding {
-	padding: 0;
-	margin: 0;
+    padding: 0;
+    margin: 0;
 }
-
 
 /* Pick Selection */
 
 .playerPortrait {
-	text-align: center;
-	margin: 10px;
+    text-align: center;
+    margin: 10px;
 }
 
 .playerPortrait img {
-	height: 100px;
+    height: 100px;
 }
 
 .picksPortrait img {
-	height: 150px;
-	width: 150px;
+    height: 150px;
+    width: 150px;
 }
 
 .picksPortrait {
-	float: left;
-	margin: 10px;
+    float: left;
+    margin: 10px;
 }
 
 .picksPortrait.disabled {
-	opacity: 0.3;
+    opacity: 0.3;
 }
 
 .pickDetails {
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	height: 100px;
-	background-color: black;
-	color: white;
-	padding: 10px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background-color: black;
+    color: white;
+    padding: 10px;
 }
 
-.answers > div{
-    float:left;
+.answers > div {
+    float: left;
     margin: 5px;
     border: 1px solid red;
     color: white;

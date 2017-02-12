@@ -202,12 +202,9 @@ angular.module('Music-Dictators').controller('gameCtrl', function ($scope, $moda
         audioTag.play();
     });
 
-    socket.on('oponent data', function (oponent) {
-        $scope.oponent = oponent;
-        oponentImg.src = oponent.img;
-        oponentImg.onload = function () {
-            drawImage();
-        };
+    socket.on('gameData', function (data) {
+        $scope.team = data.team
+        $scope.enemy = data.enemy
     });
 
     socket.on('countdown', function (count) {

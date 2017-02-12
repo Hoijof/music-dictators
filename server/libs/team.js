@@ -69,7 +69,7 @@ function Team(io, gameId, teamId, ideology) {
         })
 
         player.socket.on('loadSong', function () {
-            team.onLoadSong(player.socket);
+            team.onLoadSong(team.id, player.socket);
         })
 
         player.socket.on('getPicks', function() {
