@@ -7,16 +7,34 @@ function Team(io, gameId, teamId) {
     team.gameId = gameId
     team.id = teamId
     team.players = []
+    team.maxPlayers = 2
+    team.full = false
     team.endGame = endGame
     team.addPlayer = addPlayer
     team.update = update
+    team.removeSocket = removeSocket
 
 
     return team
 
     function addPlayer(player) {
-        team.players.push(player)
-        initPlayer(player)
+        if (!team.full) {
+            team.players.push(player);
+            initPlayer(player);
+        }
+        if (team.players.length >= team.maxPlayers) {
+            team.full = true;
+        }
+    }
+
+    function removeSocket(socket) {
+        for (var i = 0; i < team.players.length; i++) {
+            if (team.players[i].socket === socket) {
+                team.players.splice(i, 1)
+                team.full = false;
+                return
+            }
+        }
     }
 
     function initPlayer(player) {

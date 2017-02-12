@@ -1,4 +1,4 @@
-angular.module('Music-Dictators').controller('gameBoardCtrl', function($scope, $modal, socket, $location) {
+angular.module('Music-Dictators').controller('gameBoardCtrl', function($scope, $modal, socket, $location, $state) {
 
 	var myModal;
 
@@ -29,7 +29,18 @@ angular.module('Music-Dictators').controller('gameBoardCtrl', function($scope, $
 			gameId : id,
 			user : $scope.user
 		};
-		socket.emit('join game', data);
+		socket.emit('join game', data, function(id) {
+            $scope.gameId = id;
+            myModal = $modal({
+                title : 'New game',
+                content : 'esperando',
+                scope : $scope,
+                template : 'partials/modals/modal.tpl.gameReq.html',
+                show : true,
+                keyboard : false,
+                backdrop : 'static'
+            });
+        });
 	};
 
 	// refresh games board from server
@@ -42,8 +53,16 @@ angular.module('Music-Dictators').controller('gameBoardCtrl', function($scope, $
 		if (myModal) {
 			myModal.hide();
 		}
-		$location.path('/game')
+        $state.go('main.game')
 	});
+
+    socket.on('lets pick', function() {
+        if (myModal) {
+            myModal.hide();
+        }
+        $state.go('main.pickSelection')
+    });
+
 
 	// get games
 	socket.emit('init gameboard');
