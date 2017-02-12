@@ -1,12 +1,53 @@
 {
   "songs": [
-    {"id": "0000.mp3",
+    {
+      "id": "0000.mp3",
       "adele": "artist",
-      "someone like you": "name"
+      "someone like you": "name",
+      "pop": "style",
+      "21": "album",
+      "2011": "year"
     },
-    {"id": "0001.mp3",
+    {
+      "id": "0001.mp3",
       "bryan adams": "artist",
-      "i do it for you": "name"
+      "i do it for you": "name",
+      "pop": "style",
+      "Waking Up The Neighbours": "album",
+      "1991": "year"
+    },
+    {
+      "id": "0002.mp3",
+      "metallica": "artist",
+      "nothing else matters": "name",
+      "metal": "style",
+      "black": "album",
+      "1991": "year"
+    },
+    {
+      "id": "0003.mp3",
+      "nirvana": "artist",
+      "smells like teen spirit": "name",
+      "grunge": "style",
+      "nevermind": "album",
+      "1991": "year"
+    },
+    {
+      "id": "0004.mp3",
+      "guns and roses": "artist",
+      "sweet child of mine": "name",
+      "grunge": "style",
+      "appetite for destruction": "album",
+      "1987": "year"
+    },
+    {
+      "id": "0005.mp3",
+      "offspring": "artist",
+      "the kids aren't alright": "name",
+      "punk rock": "style",
+      "americana": "album",
+      "1998": "year"
     }
+
   ]
 }

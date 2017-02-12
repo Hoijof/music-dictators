@@ -86,6 +86,13 @@
       "powerName": "Libreation",
       "powerDescription": "Copies a random ultimate from and opponent"
     }
-  ]
+  ],
+  "dunno": {
+    "name": "",
+    "url": "img/dunno.jpg",
+    "pickId": 12,
+    "powerName": "",
+    "powerDescription": ""
+  }
 }
 
