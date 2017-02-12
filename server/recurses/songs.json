@@ -47,6 +47,31 @@
       "style": "punk rock",
       "album": "americana",
       "year": "1998"
+    },
+    {
+      "id": "0006.mp3",
+      "artist": "queen",
+      "name": "we will rock you",
+      "style": "rock",
+      "album": "news of the world",
+      "year": "1977"
+    },
+    {
+      "id": "0007.mp3",
+      "artist": "michael jackson",
+      "name": "bad",
+      "style": "pop",
+      "album": "bad",
+      "year": "1987"
+    },
+    {
+      "id": "0008.mp3",
+      "artist": "gorillaz",
+      "name": "clint eastwood",
+      "style": "pop",
+      "album": "gorillaz",
+      "year": "2001"
     }
+
   ]
 }
