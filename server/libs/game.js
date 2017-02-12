@@ -89,8 +89,8 @@ function Game(io, gameId, team1, team2) {
     }
 
     function teamLeave(teamId) {
-        console.log('leave: ' + teamId);
-        endGame();
+        var winner = team1.id === teamId ? team2 : team1;
+        endGame(winner);
     }
 
     function getPicks(teamId, ideology) {
@@ -151,12 +151,12 @@ function Game(io, gameId, team1, team2) {
                 //team 1 winn
                 io.to(team1.id).emit('explosion', game.ball.position);
                 io.to(team2.id).emit('explosion', -game.ball.position);
-                endGame()
+                endGame(team1)
             } else if (game.ball.position < -game.width / 2) {
                 //team 2 winn
                 io.to(team1.id).emit('explosion', game.ball.position);
                 io.to(team2.id).emit('explosion', -game.ball.position);
-                endGame()
+                endGame(team2)
             } else {
                 game.ball.position += game.ball.speed;
                 team1.update({
@@ -176,10 +176,10 @@ function Game(io, gameId, team1, team2) {
     }
 
     // end game function, save game to database
-    function endGame() {
+    function endGame(winner) {
         game.running = false;
         game.end = true;
-        io.to(game.id).emit('game over');
+        io.to(game.id).emit('game over', winner.ideology);
         game.teams.forEach(function (team) {
             team.endGame()
         })

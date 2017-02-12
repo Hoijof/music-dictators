@@ -4,57 +4,7 @@
 			<span ng-bind="title"></span>
 		</div>
 		<div class="body">
-			<table>
-				<tbody>
-					<tr>
-						<th>{{(myResults.win) ? 'Winner' : 'Looser'}}</th>
-						<th></th>
-						<th>{{(oponentResults.win) ? 'Winner' : 'Looser'}}</th>
-					</tr>
-					<tr>
-						<td>{{user.userName}}</td>
-						<td></td>
-						<td>{{oponent.userName}}</td>
-					</tr>
-					<tr>
-						<td>{{myResults.score}}</td>
-						<td>score</td>
-						<td>{{oponentResults.score}}</td>
-					</tr>
-					<tr>
-						<td>{{myResults.unitsCreated}}</td>
-						<td>units created</td>
-						<td>{{oponentResults.unitsCreated}}</td>
-					</tr>
-					<tr>
-						<td>{{ myResults.unitsKilled}}</td>
-						<td>kills</td>
-						<td>{{oponentResults.unitsKilled}}</td>
-					</tr>
-					<tr>
-						<td>{{myResults.specials}}</td>
-						<td>specials</td>
-						<td>{{oponentResults.specials}}</td>
-					</tr>
-					<tr>
-						<td>{{myResults.wordsTyped}}</td>
-						<td>words typed</td>
-						<td>{{oponentResults.wordsTyped}}</td>
-					</tr>
-					<tr>
-						<td>{{myResults.correctWords}}</td>
-						<td>correct typed</td>
-						<td>{{oponentResults.correctWords}}</td>
-					</tr>
-					<tr>
-						<td>{{myResults.incorrectWords}}</td>
-						<td>incorrect typed</td>
-						<td>{{oponentResults.incorrectWords}}</td>
-					</tr>
-
-
-				</tbody>
-			</table>
+			<span class="nl" ng-bind="message"></span>
 		</div>
 		<div class="fGroup3">
 			<input class="btn-pink" type="button" ng-click="gameOver(); $hide()" value="Back to profile" />

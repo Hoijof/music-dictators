@@ -274,9 +274,15 @@ angular.module('Music-Dictators').controller('gameCtrl', function ($scope, $moda
         newExplision(pos.x, pos.y, enemiesColor);
     });
 
-    socket.on('game over', function (game) {
+    socket.on('game over', function (winner) {
         // gameRuning = false;
         // audioTag.pause()
+        var message = '';
+        if(winner === 'capitalist') {
+            $scope.message = 'Capitalism win!!!'
+        } else {
+            $scope.message = 'Communism win!!!'
+        }
         myModal = $modal({
             title: 'Game Over',
             scope: $scope,
