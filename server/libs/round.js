@@ -13,7 +13,11 @@ function Round () {
       }
     }
 
-    console.log(round.answer);
+    round.song.allAnswered = false;
+
+    round.answer.id = ':D';
+    round.answer.allAnswered = ':D';
+
     return round.song;
   };
 
