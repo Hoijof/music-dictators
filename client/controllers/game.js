@@ -180,15 +180,13 @@ angular.module('Music-Dictators').controller('gameCtrl', function ($scope, $moda
         var result = [];
 
         for (var i in data) {
-            if (data.hasOwnProperty(i) && i !== 'id') {
+            if (data.hasOwnProperty(i) && i !== 'id' && i !== 'allAnswered') {
               result.push( {
                 name: i,
                 value: data[i]
               });
             }
         }
-
-        console.log(result);
 
         return result;
     }
@@ -241,7 +239,8 @@ angular.module('Music-Dictators').controller('gameCtrl', function ($scope, $moda
     socket.on('updateGame', function (data) {
         if (data) {
             ball = data.ball;
-            meteroidParticleGenerator(ball.speed < 0 ? width / 2 - ball.position : width / 2 + ball.position, height/2, ball.speed < 0 ? enemiesColor : color, ball.speed < 0 ? 'e' : '')
+            $scope.answers = mapAnswers(data.answer);
+            // meteroidParticleGenerator(ball.speed < 0 ? width / 2 - ball.position : width / 2 + ball.position, height/2, ball.speed < 0 ? enemiesColor : color, ball.speed < 0 ? 'e' : '')
         }
     })
 
@@ -266,7 +265,6 @@ angular.module('Music-Dictators').controller('gameCtrl', function ($scope, $moda
     });
 
     socket.on('explosion', function (pos) {
-        console.log(pos);
         newExplision(width / 2 + pos, height/2, color);
     });
 
