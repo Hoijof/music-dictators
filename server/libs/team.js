@@ -7,6 +7,8 @@ function Team(io, gameId, teamId) {
     team.gameId = gameId
     team.id = teamId
     team.players = []
+    team.maxPlayers = 2
+    team.full = false
     team.endGame = endGame
     team.addPlayer = addPlayer
     team.update = update
@@ -15,8 +17,13 @@ function Team(io, gameId, teamId) {
     return team
 
     function addPlayer(player) {
-        team.players.push(player)
-        initPlayer(player)
+        if (!team.full) {
+            team.players.push(player);
+            initPlayer(player);
+        }
+        if (team.players.length >= team.maxPlayers) {
+            team.full = true;
+        }
     }
 
     function initPlayer(player) {

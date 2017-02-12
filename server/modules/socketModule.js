@@ -122,7 +122,11 @@ module.exports = function (io, User, Message, Game, moment) {
             games[gId].team1 = new Team(io, gId, t1Id);
             games[gId].team2 = new Team(io, gId, t2Id);
             var player = new Player(gId, socket, data);
-            games[gId].team1.addPlayer(player);
+            if (data.ideology === 'capitalism') {
+                games[gId].team1.addPlayer(player);
+            } else {
+                games[gId].team2.addPlayer(player);
+            }
             socket.join(gId);
             callback(gId);
             gameId++;
@@ -141,6 +145,11 @@ module.exports = function (io, User, Message, Game, moment) {
             var game = games[data.gameId];
             var player = new Player(data.gameId, socket, data.user);
             game.team2.addPlayer(player);
+            if (data.user.ideology === 'capitalism') {
+                games[data.gameId].team1.addPlayer(player);
+            } else {
+                games[data.gameId].team2.addPlayer(player);
+            }
             socket.join(data.gameId);
             io.to(data.gameId).emit('lets play');
             gamesLogic.pushGame(data.gameId, game.team1, game.team2);
@@ -200,10 +209,16 @@ module.exports = function (io, User, Message, Game, moment) {
     function refreshGames() {
         var g = [];
         for (var key in games) {
-            g.push({
-                id: key,
-                maker: games[key].maker.userName
-            });
+            if (games[key].team1.full && games[key].team2.full) {
+                io.to(key).emit('lets pick');
+            } else {
+                g.push({
+                    id: key,
+                    maker: games[key].maker.userName,
+                    capitalists: games[key].team1.players.length,
+                    communists: games[key].team2.players.length
+                });
+            }
         }
         io.emit('games', g);
     }
