@@ -37,7 +37,6 @@ angular.module('Music-Dictators').controller('pickSelectionCtrl', function ($sco
 
 
     socket.on('loadPicks', function (portraits) {
-        console.log(portraits);
         $scope.portraits = portraits;
         $scope.picks = [
             {
