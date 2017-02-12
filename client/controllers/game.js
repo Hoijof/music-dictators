@@ -199,6 +199,7 @@ angular.module('Music-Dictators').controller('gameCtrl', function ($scope, $moda
     // game over resolve
     $scope.gameOver = function () {
         gameRuning = false;
+        window.cancelAnimationFrame(interval);
         $location.path('/profile');
     };
 
@@ -267,6 +268,11 @@ angular.module('Music-Dictators').controller('gameCtrl', function ($scope, $moda
         newExplision(pos.x, pos.y, color);
     });
 
+    socket.on('explosion', function (pos) {
+        console.log(pos);
+        newExplision(width / 2 + pos, height/2, color);
+    });
+
     socket.on('enemie explosion', function (pos) {
         newExplision(pos.x, pos.y, enemiesColor);
     });
@@ -289,8 +295,8 @@ angular.module('Music-Dictators').controller('gameCtrl', function ($scope, $moda
     });
 
     socket.on('game over', function (game) {
-        gameRuning = false;
-        audioTag.pause()
+        // gameRuning = false;
+        // audioTag.pause()
         myModal = $modal({
             title: 'Game Over',
             scope: $scope,
@@ -300,7 +306,6 @@ angular.module('Music-Dictators').controller('gameCtrl', function ($scope, $moda
             backdrop: 'static'
         });
         socket.removeAllListeners();
-        window.cancelAnimationFrame(interval);
     });
 
     $scope.$on('$locationChangeStart', function (e, to, from) {

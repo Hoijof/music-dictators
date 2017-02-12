@@ -11,7 +11,7 @@ function Team(io, gameId, teamId, ideology) {
     team.ideology = ideology
     team.players = []
     team.team = []
-    team.maxPlayers = 2
+    team.maxPlayers = 1
     team.full = false
     team.endGame = endGame
     team.addPlayer = addPlayer
@@ -20,7 +20,7 @@ function Team(io, gameId, teamId, ideology) {
     team.pickReady = pickReady
 
 
-    return team
+    return team;
 
     function addPlayer(player) {
         if (!team.full) {
@@ -138,6 +138,11 @@ function Team(io, gameId, teamId, ideology) {
             player.socket.removeAllListeners('ready');
             player.socket.removeAllListeners('new word');
             player.socket.removeAllListeners('leave');
+            player.socket.removeAllListeners('loadSong');
+            player.socket.removeAllListeners('getPicks');
+            player.socket.removeAllListeners('pickDone');
+            player.socket.leave(team.id);
+            player.socket.leave(team.gameId);
         })
     }
 }

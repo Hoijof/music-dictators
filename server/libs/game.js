@@ -14,12 +14,13 @@ function Game(io, gameId, team1, team2) {
         speed: 0
     };
 
-    game.politics = politics;
+    game.politics = JSON.parse(JSON.stringify(politics));
 
     game.staticBallTime = 0;
     game.timeLeft = 4;
 
     game.round = new Round();
+    game.width = 1200;
 
     game.update = update;
     game.endGame = endGame;
@@ -127,20 +128,31 @@ function Game(io, gameId, team1, team2) {
                 team.update()
             });
 
-            game.ball.position += game.ball.speed;
-
-            team1.update({
-                ball: {
-                    position: game.ball.position,
-                    speed: game.ball.speed
-                }
-            });
-            team2.update({
-                ball: {
-                    position: -game.ball.position,
-                    speed: -game.ball.speed
-                }
-            })
+            if(game.ball.position > game.width / 2){
+                //team 1 winn
+                io.to(team1.id).emit('explosion', game.ball.position);
+                io.to(team2.id).emit('explosion', -game.ball.position);
+                endGame()
+            } else if (game.ball.position < -game.width / 2){
+                //team 2 winn
+                io.to(team1.id).emit('explosion', game.ball.position);
+                io.to(team2.id).emit('explosion', -game.ball.position);
+                endGame()
+            } else {
+                game.ball.position += game.ball.speed;
+                team1.update({
+                    ball: {
+                        position: game.ball.position,
+                        speed: game.ball.speed
+                    }
+                });
+                team2.update({
+                    ball: {
+                        position: -game.ball.position,
+                        speed: -game.ball.speed
+                    }
+                })
+            }
         }
     }
 
