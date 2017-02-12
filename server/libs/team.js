@@ -12,6 +12,7 @@ function Team(io, gameId, teamId) {
     team.endGame = endGame
     team.addPlayer = addPlayer
     team.update = update
+    team.removeSocket = removeSocket
 
 
     return team
@@ -23,6 +24,16 @@ function Team(io, gameId, teamId) {
         }
         if (team.players.length >= team.maxPlayers) {
             team.full = true;
+        }
+    }
+
+    function removeSocket(socket) {
+        for (var i = 0; i < team.players.length; i++) {
+            if (team.players[i].socket === socket) {
+                team.players.splice(i, 1)
+                team.full = false;
+                return
+            }
         }
     }
 

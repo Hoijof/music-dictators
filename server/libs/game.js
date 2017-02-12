@@ -35,13 +35,18 @@ function Game(io, gameId, team1, team2) {
         socket.emit('loadSong', game.round.song.id);
     }
 
-
     function newWord(teamId, word, hero, callback) {
         checkWord(word);
         if (teamId === team1.id) {
             game.ball.speed++;
+            if(game.ball.speed === 0) {
+                game.ball.speed++;
+            }
         } else {
             game.ball.speed--;
+            if(game.ball.speed === 0) {
+                game.ball.speed--;
+            }
         }
         callback({
             ok : true,

@@ -303,11 +303,13 @@ angular.module('Music-Dictators').controller('gameCtrl', function ($scope, $moda
         window.cancelAnimationFrame(interval);
     });
 
-    $scope.$on('$locationChangeStart', function (next, current) {
-        socket.removeAllListeners();
-        gameRuning = false;
-        window.cancelAnimationFrame(interval);
-        socket.emit('leave');
+    $scope.$on('$locationChangeStart', function (e, to, from) {
+        if(to.indexOf('/game') < 0) {
+            socket.removeAllListeners();
+            gameRuning = false;
+            window.cancelAnimationFrame(interval);
+            socket.emit('leave');
+        }
     });
 
     socket.on('loadSong', initMusic);

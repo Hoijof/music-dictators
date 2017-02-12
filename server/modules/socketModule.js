@@ -116,13 +116,12 @@ module.exports = function (io, User, Message, Game, moment) {
             games[gId] = {
                 maker: data
             };
-            console.log(data);
             var t1Id = 'team' + teamId++;
             var t2Id = 'team' + teamId++;
             games[gId].team1 = new Team(io, gId, t1Id);
             games[gId].team2 = new Team(io, gId, t2Id);
             var player = new Player(gId, socket, data);
-            if (data.ideology === 'capitalism') {
+            if (data.ideology === 'capitalist') {
                 games[gId].team1.addPlayer(player);
             } else {
                 games[gId].team2.addPlayer(player);
@@ -135,25 +134,31 @@ module.exports = function (io, User, Message, Game, moment) {
 
         // socket cancel game
         socket.on('cancel game', function (id) {
-            delete games[id];
+            // delete games[id];
+            games[id].team1.removeSocket(socket)
+            games[id].team2.removeSocket(socket)
+            if (games[id].team1.players.length <= 0 && games[id].team2.players.length <= 0) {
+                delete games[id];
+            }
             refreshGames();
         });
 
         // socket join existing game
-        socket.on('join game', function (data) {
-            console.log(data.user);
+        socket.on('join game', function (data, callback) {
             var game = games[data.gameId];
             var player = new Player(data.gameId, socket, data.user);
-            game.team2.addPlayer(player);
-            if (data.user.ideology === 'capitalism') {
-                games[data.gameId].team1.addPlayer(player);
+            if (data.user.ideology === 'capitalist') {
+                game.team1.addPlayer(player);
             } else {
-                games[data.gameId].team2.addPlayer(player);
+                game.team2.addPlayer(player);
+            }
+            if (!game.team1.full || !game.team2.full) {
+                callback(data.gameId);
             }
             socket.join(data.gameId);
-            io.to(data.gameId).emit('lets play');
-            gamesLogic.pushGame(data.gameId, game.team1, game.team2);
-            delete games[data.gameId];
+            // io.to(data.gameId).emit('lets play');
+            // gamesLogic.pushGame(data.gameId, game.team1, game.team2);
+            // delete games[data.gameId];
             refreshGames();
         });
 
@@ -182,7 +187,9 @@ module.exports = function (io, User, Message, Game, moment) {
                 }
             }
             for (var key in games) {
-                if (games[key].socket === socket) {
+                games[key].team1.removeSocket(socket)
+                games[key].team2.removeSocket(socket)
+                if (games[key].team1.players.length <= 0 && games[key].team2.players.length <= 0) {
                     delete games[key];
                 }
             }
@@ -210,7 +217,9 @@ module.exports = function (io, User, Message, Game, moment) {
         var g = [];
         for (var key in games) {
             if (games[key].team1.full && games[key].team2.full) {
-                io.to(key).emit('lets pick');
+                gamesLogic.pushGame(key, games[key].team1, games[key].team2);
+                io.to(key).emit('lets play');
+                delete games[key]
             } else {
                 g.push({
                     id: key,

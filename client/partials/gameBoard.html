@@ -5,7 +5,7 @@
 			<div class="box2 box-green" id="gameBoard">
 				<perfect-scrollbar class="scroller" wheel-propagation="true" wheel-speed="5" refresh-on-change="games" on-scroll="onScroll(scrollTop, scrollHeight)">
 				<div class="fGroup2" ng-repeat="(key, value) in games">
-					<input class="btn-green" type="button" ng-click="joinGame(value.id)" value="Game created by {{value.maker}}" />
+					<input class="btn-green" type="button" ng-click="joinGame(value.id)" value="Game capitalists: {{value.capitalists}} vs communists: {{value.communists}}" />
 				</div>
 				</perfect-scrollbar>
 			</div>
