@@ -46,8 +46,8 @@ function Game (io, gameId, team1, team2) {
     socket.emit('loadSong', game.round.song.id);
   }
 
-  function newWord (teamId, word, hero, callback) {
-    var result = checkWord(word);
+  function newWord (teamId, word, player, callback) {
+    var result = checkWord(word, player);
     if (game.round.song.allAnswered === true) {
       game.round.changeSong();
       io.to(game.id).emit('loadSong', game.round.song.id);
@@ -75,8 +75,34 @@ function Game (io, gameId, team1, team2) {
     })
   }
 
-  function checkWord (word) {
+  function checkWord (word, player) {
     var result = false;
+
+    if (word === '/power' && player.power === true) {
+      switch(player.hero.pickId) {
+        case 2:
+          if (player.teamId === game.teams[0]) {
+            if (game.ball.speed > 0) game.ball.speed += 2;
+          } else {
+            if (game.ball.speed < 0) game.ball.speed -= 2;
+          }
+          break;
+        case 9:
+          game.ball.speed = parseInt((game.ball.speed/2) * -1);
+          if (game.ball.speed === 0) {
+            if (player.teamId === game.teams[0]) {
+              if (game.ball.speed > 0) game.ball.speed = 1;
+            } else {
+              if (game.ball.speed < 0) game.ball.speed = -1;
+            }
+          }
+          break;
+        default:
+          game.ball.speed = 0;
+      }
+
+      player.power = false;
+    }
 
     if ( word === 'orozco') return true;
     for (var i in game.round.song) {

@@ -9,6 +9,7 @@ function Player(gameId, socket, user) {
     player.pickReady = false;
     player.hero = null
     player.setHero = setHero
+    player.power = true;
 
     return player;
 

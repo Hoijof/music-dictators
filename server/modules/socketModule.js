@@ -128,6 +128,7 @@ module.exports = function (io, User, Message, Game, moment) {
             }
             socket.join(gId);
             callback(gId);
+          gamesLogic.pushGame(gId, games[gId].team1, games[gId].team2);
             gameId++;
             refreshGames();
         });
@@ -217,7 +218,7 @@ module.exports = function (io, User, Message, Game, moment) {
         var g = [];
         for (var key in games) {
             if (games[key].team1.full && games[key].team2.full) {
-                gamesLogic.pushGame(key, games[key].team1, games[key].team2);
+                // gamesLogic.pushGame(key, games[key].team1, games[key].team2);
                 io.to(key).emit('lets pick');
                 delete games[key]
             } else {

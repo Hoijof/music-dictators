@@ -25,6 +25,7 @@ function Team(io, gameId, teamId, ideology) {
     function addPlayer(player) {
         if (!team.full) {
             team.players.push(player);
+            player.teamId = team.id;
             initPlayer(player);
         }
         if (team.players.length >= team.maxPlayers) {
@@ -53,7 +54,7 @@ function Team(io, gameId, teamId, ideology) {
 
         player.socket.on('new word', function (word, callback) {
             if (team.onNewWord) {
-                team.onNewWord(teamId, word, player.hero, callback.bind(callback));
+                team.onNewWord(teamId, word, player, callback.bind(callback));
             }
         })
 
