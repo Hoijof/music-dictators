@@ -150,6 +150,8 @@ input:focus {
 	-webkit-transition: all 0s;
 	-moz-transition: all 0s;
 	transition: all 0s;
+	text-align: center;
+	padding: 10px;
 }
 
 #gameTutorial {

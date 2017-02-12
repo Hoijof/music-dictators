@@ -143,7 +143,6 @@ angular.module('Music-Dictators').controller('gameCtrl', function ($scope, $moda
     var resizeCanvas = function () {
         var newWidth = document.getElementById('canvasBox').clientWidth;
         document.getElementById('canvasBox').style.height = (newWidth * height / width) + 'px';
-        document.getElementById('canvasInfo').style.height = (newWidth * height2 / width) + 'px';
 
         if (newWidth < 600) {
             mobile = true;
@@ -273,10 +272,8 @@ angular.module('Music-Dictators').controller('gameCtrl', function ($scope, $moda
     });
 
     socket.on('game over', function (winner) {
-        // gameRuning = false;
-        // audioTag.pause()
         var message = '';
-        if(winner === 'capitalist') {
+        if(winner === 'right') {
             $scope.message = 'Capitalism win!!!'
         } else {
             $scope.message = 'Communism win!!!'
