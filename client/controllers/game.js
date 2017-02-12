@@ -241,7 +241,7 @@ angular.module('Music-Dictators').controller('gameCtrl', function ($scope, $moda
     socket.on('updateGame', function (data) {
         if (data) {
             ball = data.ball;
-            meteroidParticleGenerator(data.ball.position)
+            meteroidParticleGenerator(ball.speed < 0 ? width / 2 - ball.position : width / 2 + ball.position, height/2, ball.speed < 0 ? enemiesColor : color, ball.speed < 0 ? 'e' : '')
         }
     })
 
