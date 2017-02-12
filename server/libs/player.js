@@ -1,13 +1,19 @@
-function Player (gameId, socket, user) {
+function Player(gameId, socket, user) {
 
-  var player = this;
-  player.ready = false;
-  player.out = false;
-  player.gameId = gameId;
-  player.socket = socket;
-  player.user = user;
+    var player = this;
+    player.ready = false;
+    player.out = false;
+    player.gameId = gameId;
+    player.socket = socket;
+    player.user = user;
+    player.hero = null
+    player.setHero = setHero
 
-  return player
+    return player;
+
+    function setHero(hero){
+        player.hero = hero
+    }
 }
 
 exports.Player = Player

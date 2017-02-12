@@ -30,7 +30,12 @@ var userSchema = new mongoose.Schema({
 		type : Boolean,
 		'default' : false
 	},
-	lastConnection : Date
+	lastConnection : Date,
+	ideology: {
+		type: String,
+		default: 'capitalist',
+		required: true
+	}
 });
 
 // user schema pre operation, encript password

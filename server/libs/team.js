@@ -29,7 +29,7 @@ function Team(io, gameId, teamId) {
 
         player.socket.on('new word', function (word, callback) {
             if (team.onNewWord) {
-                team.onNewWord(teamId, word, hero, callback);
+                team.onNewWord(teamId, word, player.hero, callback.bind(callback));
             }
         })
 
@@ -44,7 +44,6 @@ function Team(io, gameId, teamId) {
         })
 
         player.socket.on('loadSong', function () {
-            console.log(player.socket);
             team.onLoadSong(player.socket);
         })
     }
@@ -65,13 +64,13 @@ function Team(io, gameId, teamId) {
                 areMore = true
             }
         })
-        if (!areMore && team.onTeamLeave) {
+        if (!areMore && team.onLeave) {
             team.onLeave(teamId)
         }
     }
 
-    function update(position) {
-        io.to(team.id).emit('ballPosition', position)
+    function update(data) {
+        io.to(team.id).emit('updateGame', data)
     }
 
     function endGame() {

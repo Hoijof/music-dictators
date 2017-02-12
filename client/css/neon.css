@@ -1,6 +1,6 @@
 /* general */
 /* inputs group */
-.fGroup1 input, .fGroup2 input, .fGroup3 input, .fGroup1 .bttn, .fGroup2 .bttn, .fGroup3 .bttn {
+.fGroup1 input, .fGroup1 select, .fGroup2 input, .fGroup3 input, .fGroup1 .bttn, .fGroup2 .bttn, .fGroup3 .bttn {
 	display: block;
 	width: 100%;
 	border-radius: 5px;
@@ -10,7 +10,7 @@
 	transition: all 0.8s;
 }
 
-input[type=text],input[type=email],input[type=password]{
+input[type=text],input[type=email],input[type=password], .fGroup1 select{
 		text-indent: 10px;
 }
 
@@ -19,7 +19,7 @@ input[type=text],input[type=email],input[type=password]{
 	margin: 0 auto 15px auto;
 }
 
-.fGroup1 input, .fGroup1 .bttn {
+.fGroup1 input, .fGroup1 .bttn, .fGroup1 select {
 	height: 50px;
 	font-size: 20px;
 }
@@ -46,7 +46,7 @@ input[type=text],input[type=email],input[type=password]{
 }
 
 @media screen and (max-width: 700px) {
-	.fGroup1 input, .fGroup1 .bttn {
+	.fGroup1 input, .fGroup1 .bttn, .fGroup1 select {
 		height: 40px;
 		font-size: 18px;
 	}

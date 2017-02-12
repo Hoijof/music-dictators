@@ -32,14 +32,21 @@ function Game(io, gameId, team1, team2) {
     return game;
 
     function loadSong(socket) {
-        //callback(game.round.song.id)
         socket.emit('loadSong', game.round.song.id);
     }
 
 
-    function newWord(teamId, word, hero) {
-        console.log(teamId, word, hero);
+    function newWord(teamId, word, hero, callback) {
         checkWord(word);
+        if (teamId === team1.id) {
+            game.ball.speed++;
+        } else {
+            game.ball.speed--;
+        }
+        callback({
+            ok : true,
+            type : 'e'
+        })
     }
 
     function checkWord(word) {
@@ -47,6 +54,7 @@ function Game(io, gameId, team1, team2) {
     }
 
     function teamLeave(teamId) {
+        console.log('leave: ' + teamId);
         endGame();
     }
 
@@ -54,13 +62,12 @@ function Game(io, gameId, team1, team2) {
     function update() {
         var lastCheck;
         if (team1.ready && team2.ready && !game.running) {
-            if(!game.start) {
+            if (!game.start) {
                 game.start = Date.now();
             }
             lastCheck = game.timeLeft;
             game.timeLeft = Math.floor((4000 - (Date.now() - game.start)) / 1000);
             if (game.timeLeft != lastCheck) {
-                console.log(game.timeLeft);
                 if (game.timeLeft < 0) {
                     game.running = true;
                     game.start = Date.now();
@@ -76,8 +83,18 @@ function Game(io, gameId, team1, team2) {
 
             game.ball.position += game.ball.speed;
 
-            team1.update(game.ball.position);
-            team2.update(-game.ball.position)
+            team1.update({
+                ball: {
+                    position: game.ball.position,
+                    speed: game.ball.speed
+                }
+            });
+            team2.update({
+                ball: {
+                    position: -game.ball.position,
+                    speed: -game.ball.speed
+                }
+            })
         }
     }
 

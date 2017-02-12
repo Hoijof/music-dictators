@@ -1,224 +1,227 @@
-module.exports = function(io, User, Message, Game, moment) {
+module.exports = function (io, User, Message, Game, moment) {
 
-	// import game loop and init
-	var gamesLogic = require('./gameModule');
-	var Team = require('../libs/team').Team
-  var Player = require('../libs/player').Player
-	gamesLogic.start(io, Game);
+    // import game loop and init
+    var gamesLogic = require('./gameModule');
+    var Team = require('../libs/team').Team
+    var Player = require('../libs/player').Player
+    gamesLogic.start(io, Game);
 
-	// module vars
-	var connectedUsers = {};
-	var games = {};
-	var gameId = 0;
-	var teamId = 0;
-	var playerId = 0;
+    // module vars
+    var connectedUsers = {};
+    var games = {};
+    var gameId = 0;
+    var teamId = 0;
+    var playerId = 0;
 
-	// on connect event handeler
-	io.on('connection', function(socket) {
+    // on connect event handeler
+    io.on('connection', function (socket) {
 
-		// socket init request
-		socket.on('init', function(data, callback) {
-			connectedUsers[socket.id] = data._id;
-			changeConected(data._id, true);
-			refreshUsers()
-			Message.find({
-				$or : [ {
-					to : data._id
-				}, {
-					from : data._id
-				} ]
-			}, function(err, messages) {
-				callback(err, messages);
-			});
-		});
+        // socket init request
+        socket.on('init', function (data, callback) {
+            connectedUsers[socket.id] = data._id;
+            changeConected(data._id, true);
+            refreshUsers()
+            Message.find({
+                $or: [{
+                    to: data._id
+                }, {
+                    from: data._id
+                }]
+            }, function (err, messages) {
+                callback(err, messages);
+            });
+        });
 
-		// socket image upload
-		socket.on('new img', function(data, callback) {
-			User.findById(data.id, function(err, user) {
-				if (!user) {
-					return res.status(400).send({
-						message : 'User not found'
-					});
-				} else {
-					var base64Data = data.img.replace(/^data:image\/png;base64,/, "");
+        // socket image upload
+        socket.on('new img', function (data, callback) {
+            User.findById(data.id, function (err, user) {
+                if (!user) {
+                    return res.status(400).send({
+                        message: 'User not found'
+                    });
+                } else {
+                    var base64Data = data.img.replace(/^data:image\/png;base64,/, "");
 
-					require("fs").writeFile('../client/img/' + data.id + '.png', base64Data, 'base64', function(err) {
-						if (err) {
-							console.log(err);
-						} else {
-							user.img = 'img/' + data.id + '.png' || user.img;
-							user.save(function(err) {
-								if (!err) {
-									callback('img/' + data.id + '.png');
-								}
-							});
-						}
-					});
+                    require("fs").writeFile('../client/img/' + data.id + '.png', base64Data, 'base64', function (err) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            user.img = 'img/' + data.id + '.png' || user.img;
+                            user.save(function (err) {
+                                if (!err) {
+                                    callback('img/' + data.id + '.png');
+                                }
+                            });
+                        }
+                    });
 
-				}
-			});
-		});
+                }
+            });
+        });
 
-		// socket chat message request
-		socket.on('refresh chat', function(data, callback) {
-			Message.find({
-				$or : [ {
-					to : data._id
-				}, {
-					from : data._id
-				} ]
-			}, function(err, messages) {
-				callback(err, messages);
-			});
-		});
+        // socket chat message request
+        socket.on('refresh chat', function (data, callback) {
+            Message.find({
+                $or: [{
+                    to: data._id
+                }, {
+                    from: data._id
+                }]
+            }, function (err, messages) {
+                callback(err, messages);
+            });
+        });
 
-		// socket users refresh request
-		socket.on('refresh users', function() {
-			refreshUsers();
-		});
+        // socket users refresh request
+        socket.on('refresh users', function () {
+            refreshUsers();
+        });
 
-		// socket send new message event
-		socket.on('new message', function(data) {
-			var message = new Message({
-				from : data.from,
-				to : data.to,
-				message : data.message,
-				time : moment(),
-				readed : false
-			});
-			message.save(function(err) {
-				io.emit('new messages');
-			});
-		});
+        // socket send new message event
+        socket.on('new message', function (data) {
+            var message = new Message({
+                from: data.from,
+                to: data.to,
+                message: data.message,
+                time: moment(),
+                readed: false
+            });
+            message.save(function (err) {
+                io.emit('new messages');
+            });
+        });
 
-		// socket read messages
-		socket.on('reading', function(data) {
-			Message.update({
-				from : data.from,
-				to : data.to
-			}, {
-				readed : true
-			}, {
-				multi : true
-			}, function(err, affected) {
-				socket.emit('new messages');
-			});
-		});
+        // socket read messages
+        socket.on('reading', function (data) {
+            Message.update({
+                from: data.from,
+                to: data.to
+            }, {
+                readed: true
+            }, {
+                multi: true
+            }, function (err, affected) {
+                socket.emit('new messages');
+            });
+        });
 
-		// socket init gameboart
-		socket.on('init gameboard', function() {
-			refreshGames();
-		});
+        // socket init gameboart
+        socket.on('init gameboard', function () {
+            refreshGames();
+        });
 
-		// socket create game
-		socket.on('new game', function(data, callback) {
-			games[gameId] = {
-				maker : data
-			};
-      games[gameId].team1 = new Team(io, gameId, teamId)
-      teamId++;
-      games[gameId].team2 = new Team(io, gameId, teamId)
-      teamId++;
-      var player = new Player(gameId, socket, data)
-      games[gameId].team1.addPlayer(player)
-      socket.join(gameId)
-			callback(gameId);
-			gameId++;
-			refreshGames();
-		});
+        // socket create game
+        socket.on('new game', function (data, callback) {
+            var gId = 'game' + gameId;
+            games[gId] = {
+                maker: data
+            };
+            console.log(data);
+            var t1Id = 'team' + teamId++;
+            var t2Id = 'team' + teamId++;
+            games[gId].team1 = new Team(io, gId, t1Id);
+            games[gId].team2 = new Team(io, gId, t2Id);
+            var player = new Player(gId, socket, data);
+            games[gId].team1.addPlayer(player);
+            socket.join(gId);
+            callback(gId);
+            gameId++;
+            refreshGames();
+        });
 
-		// socket cancel game
-		socket.on('cancel game', function(id) {
-			delete games[id];
-			refreshGames();
-		});
+        // socket cancel game
+        socket.on('cancel game', function (id) {
+            delete games[id];
+            refreshGames();
+        });
 
-		// socket join existing game
-		socket.on('join game', function(data) {
-			var game = games[data.gameId]
-      var player = new Player(data.gameId, socket, data.user)
-      game.team2.addPlayer(player)
-      socket.join(data.gameId);
-			io.to(data.gameId).emit('lets play');
-			gamesLogic.pushGame(data.gameId, game.team1, game.team2);
-			delete games[data.gameId];
-			refreshGames();
-		});
+        // socket join existing game
+        socket.on('join game', function (data) {
+            console.log(data.user);
+            var game = games[data.gameId];
+            var player = new Player(data.gameId, socket, data.user);
+            game.team2.addPlayer(player);
+            socket.join(data.gameId);
+            io.to(data.gameId).emit('lets play');
+            gamesLogic.pushGame(data.gameId, game.team1, game.team2);
+            delete games[data.gameId];
+            refreshGames();
+        });
 
-		// socket statistics request
-		socket.on('get statistics', function(id, callback) {
-			Game.find({
-				$or : [ {
-					'player1.id' : id
-				}, {
-					'player2.id' : id
-				} ]
-			}, function(err, games) {
-				callback(err, games);
-			});
-		});
+        // socket statistics request
+        socket.on('get statistics', function (id, callback) {
+            Game.find({
+                $or: [{
+                    'player1.id': id
+                }, {
+                    'player2.id': id
+                }]
+            }, function (err, games) {
+                callback(err, games);
+            });
+        });
 
-		// socket disconnect handeler
-		socket.on('disconnect', function() {
-			var disconnectUser = true;
-			var id = connectedUsers[socket.id];
-			delete connectedUsers[socket.id];
-			for ( var key in connectedUsers) {
-				if (connectedUsers[key] === id) {
-					disconnectUser = false;
-					break;
-				}
-			}
-			for ( var key in games) {
-				if(games[key].socket === socket){
-					delete games[key];
-				}
-			}
-			refreshGames();
-			if (disconnectUser) {
-				changeConected(id, false);
-			}
-		});
-	});
+        // socket disconnect handeler
+        socket.on('disconnect', function () {
+            var disconnectUser = true;
+            var id = connectedUsers[socket.id];
+            delete connectedUsers[socket.id];
+            for (var key in connectedUsers) {
+                if (connectedUsers[key] === id) {
+                    disconnectUser = false;
+                    break;
+                }
+            }
+            for (var key in games) {
+                if (games[key].socket === socket) {
+                    delete games[key];
+                }
+            }
+            refreshGames();
+            if (disconnectUser) {
+                changeConected(id, false);
+            }
+        });
+    });
 
-	// change status of user
-	function changeConected(id, status) {
-		User.findById(id, function(err, user) {
-			if (user) {
-				user.connected = status;
-				user.save(function(err) {
-					refreshUsers();
-				});
-			}
-		});
-	}
+    // change status of user
+    function changeConected(id, status) {
+        User.findById(id, function (err, user) {
+            if (user) {
+                user.connected = status;
+                user.save(function (err) {
+                    refreshUsers();
+                });
+            }
+        });
+    }
 
-	// send games
-	function refreshGames() {
-		var g = [];
-		for ( var key in games) {
-			g.push({
-				id : key,
-				maker : games[key].maker.userName
-			});
-		}
-		io.emit('games', g);
-	}
+    // send games
+    function refreshGames() {
+        var g = [];
+        for (var key in games) {
+            g.push({
+                id: key,
+                maker: games[key].maker.userName
+            });
+        }
+        io.emit('games', g);
+    }
 
-	// send users
-	function refreshUsers() {
-		User.find({}, '-email -img -__v', function(err, users) {
-			for (var i = 0; i < users.length; i++) {
-				if (users[i].connected) {
-					users[i].lastConnection = Date.now();
-					users[i].save(function(err) {
-						if (err) {
-							console.log(err);
-						}
-					});
-				}
-			}
-			io.sockets.emit('users', users);
-		});
-	}
+    // send users
+    function refreshUsers() {
+        User.find({}, '-email -img -__v', function (err, users) {
+            for (var i = 0; i < users.length; i++) {
+                if (users[i].connected) {
+                    users[i].lastConnection = Date.now();
+                    users[i].save(function (err) {
+                        if (err) {
+                            console.log(err);
+                        }
+                    });
+                }
+            }
+            io.sockets.emit('users', users);
+        });
+    }
 };

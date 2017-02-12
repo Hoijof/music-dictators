@@ -107,7 +107,8 @@ module.exports = function(app, User, moment, jwt, config) {
 				user = new User({
 					userName : req.body.userName,
 					email : req.body.email,
-					password : req.body.password
+					password : req.body.password,
+                    ideology : req.body.ideology
 				});
 				user.save(function() {
 					res.send({
