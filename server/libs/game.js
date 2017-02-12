@@ -88,6 +88,9 @@ function Game(io, gameId, team1, team2) {
         setEnablePicks(team2.ideology, team2.team);
         getPicks(team1.id, team1.ideology);
         getPicks(team2.id, team2.ideology);
+        if(team1.pickReady() && team2.pickReady()) {
+            io.to(game.id).emit('lets play')
+        }
     }
 
     function setEnablePicks(ideology, team) {

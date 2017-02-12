@@ -6,6 +6,7 @@ function Player(gameId, socket, user) {
     player.gameId = gameId;
     player.socket = socket;
     player.user = user;
+    player.pickReady = false;
     player.hero = null
     player.setHero = setHero
 

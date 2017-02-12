@@ -17,6 +17,7 @@ function Team(io, gameId, teamId, ideology) {
     team.addPlayer = addPlayer
     team.update = update
     team.removeSocket = removeSocket
+    team.pickReady = pickReady
 
 
     return team
@@ -81,9 +82,23 @@ function Team(io, gameId, teamId, ideology) {
                 return hero.pickId === id
             })
             player.setHero(hero);
+            player.pickReady = true;
             setTeam();
             team.onPickDone();
         })
+    }
+
+    function pickReady () {
+        if(!team.players.length){
+            return false
+        }
+        var ready = true
+        team.players.forEach(function(player) {
+            if(!player.pickReady){
+                ready = false
+            }
+        })
+        return ready
     }
 
     function setTeam () {
