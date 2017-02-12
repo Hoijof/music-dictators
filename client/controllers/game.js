@@ -3,11 +3,9 @@ angular.module('Music-Dictators').controller('gameCtrl', function ($scope, $moda
     // canvas context
     var ctxBackground;
     var ctxSpecial;
-    var ctxInfoBox;
     var ctxParticles;
     var ctxUnits;
     var ctxEnemies;
-    var ctxImage;
     var auxCtx;
 
     // canvas vars
@@ -84,11 +82,6 @@ angular.module('Music-Dictators').controller('gameCtrl', function ($scope, $moda
         ctxSpecial.fillStyle = specialColor;
         ctxSpecial.lineWidth = 1;
 
-        canvas = document.getElementById('imgCanvas');
-        canvas.height = height2;
-        canvas.width = width;
-        ctxImage = canvas.getContext('2d');
-
         canvas = document.getElementById('backgroundCanvas');
         canvas.height = height;
         canvas.width = width;
@@ -99,12 +92,6 @@ angular.module('Music-Dictators').controller('gameCtrl', function ($scope, $moda
         canvas.height = height;
         canvas.width = width;
         ctxParticles = canvas.getContext('2d');
-
-        canvas = document.getElementById('panelCanvas');
-        canvas.height = height2;
-        canvas.width = width;
-        ctxInfoBox = canvas.getContext('2d');
-        drawInfoBox();
 
         canvas = document.getElementById('unitsCanvas');
         canvas.height = height;
@@ -185,14 +172,6 @@ angular.module('Music-Dictators').controller('gameCtrl', function ($scope, $moda
                 particles.push(new Particle(particleData.x, particleData.y, a, Math.random() * 5 + 1, (data.ok) ? particleData.color : "#FF0000", 2));
             }
             $scope.words = '';
-            if (data.type === 's') {
-                special = null;
-                specialTarget = {
-                    x: -50,
-                    y: height / 2
-                };
-                specialExplosion();
-            }
             $scope.answers = mapAnswers(data.answer);
         });
     };
@@ -262,6 +241,7 @@ angular.module('Music-Dictators').controller('gameCtrl', function ($scope, $moda
     socket.on('updateGame', function (data) {
         if (data) {
             ball = data.ball;
+            meteroidParticleGenerator(data.ball.position)
         }
     })
 
@@ -294,23 +274,6 @@ angular.module('Music-Dictators').controller('gameCtrl', function ($scope, $moda
         newExplision(pos.x, pos.y, enemiesColor);
     });
 
-    socket.on('special ready', function () {
-        special = new Special();
-    });
-
-    socket.on('special word', function (word) {
-        special.setWord(word);
-    });
-
-    socket.on('loose special', function () {
-        special = null;
-        specialTarget = {
-            x: width + 50,
-            y: height / 2
-        };
-        specialExplosion();
-    });
-
     socket.on('game over', function (game) {
         // gameRuning = false;
         // audioTag.pause()
@@ -339,10 +302,6 @@ angular.module('Music-Dictators').controller('gameCtrl', function ($scope, $moda
     // draw functions
     var draw = function () {
         if (gameRuning) {
-            drawInfoBox();
-            // drawSpecial();
-            // drawUnits();
-            // drawEnemies();
             drawParticles();
             drawBall();
         }
@@ -355,36 +314,6 @@ angular.module('Music-Dictators').controller('gameCtrl', function ($scope, $moda
         ctxSpecial.fill();
         ctxSpecial.stroke();
     }
-
-    var drawEnemies = function () {
-        if (ctxEnemies) {
-            ctxEnemies.clearRect(0, 0, width, height);
-            for (var i = 0; i < enemies.length; i++) {
-                ctxEnemies.fillStyle = "#000000";
-                ctxEnemies.beginPath();
-                ctxEnemies.arc(width - enemies[i].x, height - enemies[i].y, 10, 0, 2 * Math.PI);
-                ctxEnemies.fill();
-                ctxEnemies.stroke();
-
-                ctxEnemies.fillStyle = enemiesColor;
-                ctxEnemies.fillText(enemies[i].word, width - enemies[i].x, height - enemies[i].y - 20);
-                meteroidParticleGenerator(enemies[i].x, height - enemies[i].y, enemiesColor, 'e');
-            }
-        }
-    };
-
-    var drawUnits = function () {
-        if (ctxUnits) {
-            ctxUnits.clearRect(0, 0, width, height);
-            for (var i = 0; i < units.length; i++) {
-                ctxUnits.beginPath();
-                ctxUnits.arc(units[i].x, units[i].y, 10, 0, 2 * Math.PI);
-                ctxUnits.fill();
-                ctxUnits.stroke();
-                meteroidParticleGenerator(units[i].x, units[i].y, color);
-            }
-        }
-    };
 
     var drawParticles = function () {
         ctxParticles.clearRect(0, 0, width, height);
@@ -425,20 +354,6 @@ angular.module('Music-Dictators').controller('gameCtrl', function ($scope, $moda
         }
     };
 
-    var drawSpecial = function () {
-        if (ctxSpecial) {
-            ctxSpecial.clearRect(0, 0, width, height);
-            if (special) {
-                special.update();
-            }
-        }
-    };
-
-    var drawImage = function () {
-        ctxImage.drawImage(userImg, 320, 10, 80, 80);
-        ctxImage.drawImage(oponentImg, 800, 10, 80, 80);
-    };
-
     var drawScenario = function () {
         ctxBackground.fillStyle = "#000000";
         ctxBackground.strokeStyle = color;
@@ -471,47 +386,6 @@ angular.module('Music-Dictators').controller('gameCtrl', function ($scope, $moda
         ctxBackground.stroke();
     };
 
-    var drawInfoBox = function () {
-
-        if (ctxInfoBox) {
-            ctxInfoBox.clearRect(0, 0, width, height2);
-
-            ctxInfoBox.font = "40px Audiowide";
-            ctxInfoBox.textAlign = 'center';
-            ctxInfoBox.fillStyle = "#FFFFFF";
-            ctxInfoBox.fillText($scope.word, width / 2, 70);
-            ctxInfoBox.font = "20px Audiowide";
-            if (timeLeft < 10) {
-                ctxInfoBox.fillStyle = "#FF0000";
-            } else {
-                ctxInfoBox.fillStyle = "#FFFFFF";
-            }
-            ctxInfoBox.fillText(timeLeft, width / 2, 30);
-            if (nextWord < 4) {
-                ctxInfoBox.fillStyle = "#FF0000";
-            } else {
-                ctxInfoBox.fillStyle = "#FFFFFF";
-            }
-            ctxInfoBox.font = "10px Audiowide";
-            ctxInfoBox.fillText(nextWord, width / 2, 90);
-
-            ctxInfoBox.font = "30px Audiowide";
-            ctxInfoBox.textAlign = 'left';
-            ctxInfoBox.fillStyle = color;
-            ctxInfoBox.strokeStyle = color;
-            ctxInfoBox.fillText(player.score, 20, 80);
-            ctxInfoBox.strokeRect(20, 20, 200, 15);
-            ctxInfoBox.fillRect(20, 20, player.life * 2, 15);
-
-            ctxInfoBox.fillStyle = enemiesColor;
-            ctxInfoBox.strokeStyle = enemiesColor;
-            ctxInfoBox.textAlign = 'right';
-            ctxInfoBox.fillText(enemy.score, width - 20, 80);
-            ctxInfoBox.strokeRect(width - 220, 20, 200, 15);
-            ctxInfoBox.fillRect(width - 220 + (100 - enemy.life) * 2, 20, enemy.life * 2, 15);
-        }
-
-    };
 
     // refresh word particles
     var refreshWord = function () {
@@ -573,73 +447,6 @@ angular.module('Music-Dictators').controller('gameCtrl', function ($scope, $moda
             particles.push(new Particle(px, py, a, Math.random() * 5 + 1, c, 2));
         }
     };
-
-    // special explosion generator
-    var specialExplosion = function () {
-        for (var i = 0; i < 90; i++) {
-            var a = (2 * Math.PI) / explosionParticles * i;
-            var px = Math.cos(a) * 10 + width / 2;
-            var py = Math.sin(a) * 10 + height / 2;
-            specialParticles.push(new Particle(px, py, a, Math.random() * 5 + 1, specialColor, 2));
-        }
-    };
-
-    // special object manager
-    function Special() {
-        var x = width / 2;
-        var y = height - 10;
-        var rad = 0;
-        var word = null;
-        var increase = true;
-        var ready = false;
-        var readySent = false;
-
-        this.setWord = function (w) {
-            word = w;
-        };
-
-        this.update = function () {
-            if (rad > 3 && y > height / 2) {
-                y--;
-            } else if (rad < 4) {
-                rad += 0.05;
-            } else if (y <= height / 2 && increase) {
-                rad += 0.05;
-            } else if (y <= height / 2 && !increase) {
-                rad -= 0.05;
-            }
-
-            if (rad >= 15) {
-                increase = false;
-                ready = true;
-            } else if (rad <= 14) {
-                increase = true;
-            }
-
-            if (ready && !readySent) {
-                readySent = true;
-                socket.emit('special ready');
-            }
-            draw();
-        };
-
-        var draw = function () {
-            ctxSpecial.beginPath();
-            ctxSpecial.arc(x, y, rad, 0, 2 * Math.PI);
-            ctxSpecial.fill();
-            ctxSpecial.stroke();
-            if (rad > 3 && rad < 5) {
-                ctxSpecial.beginPath();
-                ctxSpecial.moveTo(x, y - rad - 2);
-                ctxSpecial.lineTo(x, y + rad + 2);
-                ctxSpecial.stroke();
-
-            }
-            if (word) {
-                ctxSpecial.fillText(word, x, y - 30);
-            }
-        };
-    }
 
     // particles objects
     function Particle(x, y, a, s, c, sz) {
