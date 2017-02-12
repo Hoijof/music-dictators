@@ -135,10 +135,10 @@ function Game (io, gameId, team1, team2) {
     return true;
   }
 
-  function teamLeave (teamId) {
-    console.log('leave: ' + teamId);
-    endGame();
-  }
+    function teamLeave(teamId) {
+        var winner = team1.id === teamId ? team2 : team1;
+        endGame(winner);
+    }
 
   function getPicks (teamId, ideology) {
     var enemy = game.teams[0].id === teamId ? game.teams[1].team : game.teams[0].team;
@@ -198,12 +198,12 @@ function Game (io, gameId, team1, team2) {
         //team 1 winn
         io.to(team1.id).emit('explosion', game.ball.position);
         io.to(team2.id).emit('explosion', -game.ball.position);
-        endGame()
+        endGame(team1)
       } else if (game.ball.position < -game.width / 2) {
         //team 2 winn
         io.to(team1.id).emit('explosion', game.ball.position);
         io.to(team2.id).emit('explosion', -game.ball.position);
-        endGame()
+        endGame(team2)
       } else {
         game.ball.position += game.ball.speed;
         team1.update({
@@ -224,15 +224,15 @@ function Game (io, gameId, team1, team2) {
     }
   }
 
-  // end game function, save game to database
-  function endGame () {
-    game.running = false;
-    game.end = true;
-    io.to(game.id).emit('game over');
-    game.teams.forEach(function (team) {
-      team.endGame()
-    })
-  };
+    // end game function, save game to database
+    function endGame(winner) {
+        game.running = false;
+        game.end = true;
+        io.to(game.id).emit('game over', winner.ideology);
+        game.teams.forEach(function (team) {
+            team.endGame()
+        })
+    };
 }
 
 exports.Game = Game;

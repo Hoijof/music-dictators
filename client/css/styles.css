@@ -313,6 +313,7 @@ input:focus {
 .modal-dialog .body {
 	text-align: center;
 	margin: 20px auto;
+	font-size: 50px;
 }
 
 .nl {
