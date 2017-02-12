@@ -28,8 +28,8 @@
       "name": "Maduro",
       "url": "img/poli/maduro.jpg",
       "pickId": 4,
-      "powerName": "Previous song",
-      "powerDescription": "Reproduces the previous song",
+      "powerName": "Freeze",
+      "powerDescription": "Freezes the shit out of that ball :D",
       "enabled": true
     },
     {
@@ -78,16 +78,16 @@
       "name": "Hitler",
       "url": "img/poli/hitler.jpeg",
       "pickId": 10,
-      "powerName": "Torture",
-      "powerDescription": "Responses are now visible to everyone",
+      "powerName": "Freeze",
+      "powerDescription": "Freezes the shit out of that ball :D",
       "enabled": true
     },
     {
       "name": "Sarkozy",
       "url": "img/poli/sarkozy.jpg",
       "pickId": 11,
-      "powerName": "Mute song",
-      "powerDescription": "Stops the audio of the current song for 5 seconds",
+      "powerName": "Freeze",
+      "powerDescription": "Freezes the shit out of that ball :D",
       "enabled": true
     },
     {
