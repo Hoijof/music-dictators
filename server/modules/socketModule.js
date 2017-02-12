@@ -118,8 +118,8 @@ module.exports = function (io, User, Message, Game, moment) {
             };
             var t1Id = 'team' + teamId++;
             var t2Id = 'team' + teamId++;
-            games[gId].team1 = new Team(io, gId, t1Id);
-            games[gId].team2 = new Team(io, gId, t2Id);
+            games[gId].team1 = new Team(io, gId, t1Id, 'right');
+            games[gId].team2 = new Team(io, gId, t2Id, 'left');
             var player = new Player(gId, socket, data);
             if (data.ideology === 'capitalist') {
                 games[gId].team1.addPlayer(player);
@@ -218,7 +218,7 @@ module.exports = function (io, User, Message, Game, moment) {
         for (var key in games) {
             if (games[key].team1.full && games[key].team2.full) {
                 gamesLogic.pushGame(key, games[key].team1, games[key].team2);
-                io.to(key).emit('lets play');
+                io.to(key).emit('lets pick');
                 delete games[key]
             } else {
                 g.push({

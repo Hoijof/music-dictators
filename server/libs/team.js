@@ -1,4 +1,6 @@
-function Team(io, gameId, teamId) {
+var politics = require('../recurses/politics.json')
+
+function Team(io, gameId, teamId, ideology) {
 
     var team = this
 
@@ -6,8 +8,10 @@ function Team(io, gameId, teamId) {
     team.io = io
     team.gameId = gameId
     team.id = teamId
+    team.ideology = ideology
     team.players = []
-    team.maxPlayers = 2
+    team.team = []
+    team.maxPlayers = 1
     team.full = false
     team.endGame = endGame
     team.addPlayer = addPlayer
@@ -38,6 +42,7 @@ function Team(io, gameId, teamId) {
     }
 
     function initPlayer(player) {
+        player.setHero(politics['dunno'])
         player.socket.join(team.id);
 
         player.socket.on('ready', function () {
@@ -63,6 +68,27 @@ function Team(io, gameId, teamId) {
 
         player.socket.on('loadSong', function () {
             team.onLoadSong(player.socket);
+        })
+
+        player.socket.on('getPicks', function() {
+            setTeam()
+            team.onGetPicks(team.id, team.ideology);
+        })
+
+        player.socket.on('pickDone', function (id) {
+            var heroes = politics[team.ideology]
+            var hero = heroes.find(function(hero){
+                return hero.pickId === id
+            })
+            player.setHero(hero)
+            team.onPickDone()
+        })
+    }
+
+    function setTeam () {
+        team.team = []
+        team.players.forEach(function(player){
+            team.team.push(player.hero)
         })
     }
 

@@ -1,4 +1,6 @@
 var Round = require('./round').Round;
+var politics = require('../recurses/politics.json')
+
 function Game(io, gameId, team1, team2) {
 
     var game = this;
@@ -28,6 +30,12 @@ function Game(io, gameId, team1, team2) {
 
     team1.onLoadSong = loadSong;
     team2.onLoadSong = loadSong;
+
+    team1.onGetPicks = getPicks
+    team2.onGetPicks = getPicks
+
+    team1.onPickDone = pickDone
+    team2.onPickDone = pickDone
 
     return game;
 
@@ -61,6 +69,34 @@ function Game(io, gameId, team1, team2) {
     function teamLeave(teamId) {
         console.log('leave: ' + teamId);
         endGame();
+    }
+
+    function getPicks(teamId, ideology){
+        var enemy = game.teams[0].id === teamId ? game.teams[1].team : game.teams[0].team;
+        var team = game.teams[0].id === teamId ? game.teams[0].team : game.teams[1].team;
+        io.to(teamId).emit('loadPicks', {
+            team: team,
+            enemy: enemy,
+            picks: politics[ideology]
+        })
+    }
+
+    function pickDone (){
+        setEnablePicks(team1.ideology, team1.team);
+        setEnablePicks(team2.ideology, team2.team);
+        getPicks(team1.id, team1.ideology);
+        getPicks(team2.id, team2.ideology);
+    }
+
+    function setEnablePicks(ideology, team) {
+        politics[ideology].forEach(function(politic) {
+            politics.enabled = true
+            team.forEach(function(hero){
+                if(politic === hero) {
+                    politics.enabled = false
+                }
+            })
+        })
     }
 
     // update game
