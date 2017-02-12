@@ -193,9 +193,26 @@ angular.module('Music-Dictators').controller('gameCtrl', function ($scope, $moda
                 };
                 specialExplosion();
             }
+            $scope.answers = mapAnswers(data.answer);
         });
     };
 
+    function mapAnswers(data) {
+        var result = [];
+
+        for (var i in data) {
+            if (data.hasOwnProperty(i) && i !== 'id') {
+              result.push( {
+                name: i,
+                value: data[i]
+              });
+            }
+        }
+
+        console.log(result);
+
+        return result;
+    }
     // game over resolve
     $scope.gameOver = function () {
         gameRuning = false;

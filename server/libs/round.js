@@ -1,11 +1,28 @@
 var songDictionary = require('../recurses/songs');
 
-function Round() {
-    var round = this;
+function Round () {
+  var round = this;
 
-    round.song = songDictionary.songs[Math.floor(Math.random()*songDictionary.songs.length)];
+  this.changeSong = function () {
+    round.song = songDictionary.songs[Math.floor(Math.random() * songDictionary.songs.length)];
+    round.answer = {};
 
-    return round;
+    for (var i in round.song) {
+      if (round.song.hasOwnProperty(i)) {
+        round.answer[i] = false;
+      }
+    }
+
+    console.log(round.answer);
+    return round.song;
+  };
+
+  this.changeSong();
+
+  return round;
+
+
 }
+
 
 exports.Round = Round;

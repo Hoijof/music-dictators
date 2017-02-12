@@ -1,132 +1,150 @@
 var Round = require('./round').Round;
 var politics = require('../recurses/politics.json')
 
-function Game(io, gameId, team1, team2) {
+function Game (io, gameId, team1, team2) {
 
-    var game = this;
-    game.id = gameId;
-    game.running = false;
-    game.countdown = false;
-    game.end = false;
-    game.teams = [team1, team2];
-    game.ball = {
-        position: 0,
-        speed: 0
-    };
+  var game = this;
+  game.id = gameId;
+  game.running = false;
+  game.countdown = false;
+  game.end = false;
+  game.teams = [team1, team2];
+  game.ball = {
+    position: 0,
+    speed: 0
+  };
 
     game.politics = JSON.parse(JSON.stringify(politics));
 
-    game.staticBallTime = 0;
-    game.timeLeft = 4;
+  game.staticBallTime = 0;
+  game.timeLeft = 4;
 
     game.round = new Round();
     game.width = 1200;
 
-    game.update = update;
-    game.endGame = endGame;
+  game.update = update;
+  game.endGame = endGame;
 
-    team1.onNewWord = newWord;
-    team2.onNewWord = newWord;
+  team1.onNewWord = newWord;
+  team2.onNewWord = newWord;
 
-    team1.onLeave = teamLeave;
-    team2.onLeave = teamLeave;
+  team1.onLeave = teamLeave;
+  team2.onLeave = teamLeave;
 
-    team1.onLoadSong = loadSong;
-    team2.onLoadSong = loadSong;
+  team1.onLoadSong = loadSong;
+  team2.onLoadSong = loadSong;
 
-    team1.onGetPicks = getPicks
-    team2.onGetPicks = getPicks
+  team1.onGetPicks = getPicks
+  team2.onGetPicks = getPicks
 
-    team1.onPickDone = pickDone
-    team2.onPickDone = pickDone
+  team1.onPickDone = pickDone
+  team2.onPickDone = pickDone
 
-    return game;
+  return game;
 
-    function loadSong(socket) {
-        socket.emit('loadSong', game.round.song.id);
-    }
+  function loadSong (socket) {
+    socket.emit('loadSong', game.round.song.id);
+  }
 
-    function newWord(teamId, word, hero, callback) {
-        checkWord(word);
-        if (teamId === team1.id) {
-            game.ball.speed++;
-            if(game.ball.speed === 0) {
-                game.ball.speed++;
-            }
-        } else {
-            game.ball.speed--;
-            if(game.ball.speed === 0) {
-                game.ball.speed--;
-            }
+  function newWord (teamId, word, hero, callback) {
+    var result = checkWord(word);
+    if (result === true) {
+      if (teamId === team1.id) {
+        game.ball.speed++;
+        if (game.ball.speed === 0) {
+          game.ball.speed++;
         }
-        callback({
-            ok : true,
-            type : 'e'
-        })
+      } else {
+        game.ball.speed--;
+        if (game.ball.speed === 0) {
+          game.ball.speed--;
+        }
+      }
+    }
+    callback({
+      ok: result,
+      type: 'e',
+      answer: game.round.answer
+    })
+  }
+
+  function checkWord (word) {
+    var result = false;
+
+    for (var i in game.round.song) {
+      if (game.round.song.hasOwnProperty(i)) {
+        if (game.round.song[i] === word && game.round.answer[i] === false) {
+          result = i;
+          break;
+        }
+      }
     }
 
-    function checkWord(word) {
-        console.log(word);
+    if (result !== false) {
+      game.round.answer[result] = word;
+      result = true;
     }
 
-    function teamLeave(teamId) {
-        console.log('leave: ' + teamId);
-        endGame();
-    }
+    return result;
+  }
 
-    function getPicks(teamId, ideology){
-        var enemy = game.teams[0].id === teamId ? game.teams[1].team : game.teams[0].team;
-        var team = game.teams[0].id === teamId ? game.teams[0].team : game.teams[1].team;
-        io.to(teamId).emit('loadPicks', {
-            team: team,
-            enemy: enemy,
-            picks: game.politics[ideology]
-        })
-    }
+  function teamLeave (teamId) {
+    console.log('leave: ' + teamId);
+    endGame();
+  }
+
+  function getPicks (teamId, ideology) {
+    var enemy = game.teams[0].id === teamId ? game.teams[1].team : game.teams[0].team;
+    var team = game.teams[0].id === teamId ? game.teams[0].team : game.teams[1].team;
+    io.to(teamId).emit('loadPicks', {
+      team: team,
+      enemy: enemy,
+      picks: game.politics[ideology]
+    })
+  }
 
     function pickDone (){
         setEnablePicks(team1.ideology, team1.team);
         setEnablePicks(team2.ideology, team2.team);
         getPicks(team1.id, team1.ideology);
         getPicks(team2.id, team2.ideology);
-        if(team1.pickReady() && team2.pickReady()) {
+    if(team1.pickReady() && team2.pickReady()) {
             io.to(game.id).emit('lets play')
+        }}
+
+  function setEnablePicks (ideology, team) {
+    game.politics[ideology].forEach(function (politic) {
+      politic.enabled = true
+      team.forEach(function (hero) {
+        if (politic === hero) {
+          politic.enabled = false
         }
-    }
+      })
+    })
+  }
 
-    function setEnablePicks(ideology, team) {
-        game.politics[ideology].forEach(function(politic) {
-            politic.enabled = true
-            team.forEach(function(hero){
-                if(politic === hero) {
-                    politic.enabled = false
-                }
-            })
-        })
-    }
-
-    // update game
-    function update() {
-        var lastCheck;
-        if (team1.ready && team2.ready && !game.running) {
-            if (!game.start) {
-                game.start = Date.now();
-            }
-            lastCheck = game.timeLeft;
-            game.timeLeft = Math.floor((4000 - (Date.now() - game.start)) / 1000);
-            if (game.timeLeft != lastCheck) {
-                if (game.timeLeft < 0) {
-                    game.running = true;
-                    game.start = Date.now();
-                    io.to(game.id).emit('playSong');
-                }
-                io.to(game.id).emit('countdown', game.timeLeft);
-            }
-        } else if (game.running) {
-            // update teams
-            game.teams.forEach(function (team) {
-                team.update()
-            });
+  // update game
+  function update () {
+    var lastCheck;
+    if (team1.ready && team2.ready && !game.running) {
+      if (!game.start) {
+        game.start = Date.now();
+      }
+      lastCheck = game.timeLeft;
+      game.timeLeft = Math.floor((4000 - (Date.now() - game.start)) / 1000);
+      if (game.timeLeft != lastCheck) {
+        if (game.timeLeft < 0) {
+          game.running = true;
+          game.start = Date.now();
+          io.to(game.id).emit('playSong');
+        }
+        io.to(game.id).emit('countdown', game.timeLeft);
+      }
+    } else if (game.running) {
+      // update teams
+      game.teams.forEach(function (team) {
+        team.update()
+      });
 
             if(game.ball.position > game.width / 2){
                 //team 1 winn
@@ -156,15 +174,15 @@ function Game(io, gameId, team1, team2) {
         }
     }
 
-    // end game function, save game to database
-    function endGame() {
-        game.running = false;
-        game.end = true;
-        io.to(game.id).emit('game over');
-        game.teams.forEach(function (team) {
-            team.endGame()
-        })
-    };
+  // end game function, save game to database
+  function endGame () {
+    game.running = false;
+    game.end = true;
+    io.to(game.id).emit('game over');
+    game.teams.forEach(function (team) {
+      team.endGame()
+    })
+  };
 }
 
 exports.Game = Game;

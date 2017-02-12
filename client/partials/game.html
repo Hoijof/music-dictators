@@ -16,3 +16,8 @@
 		<input type="text" id="words" ng-model="words" autocomplete="off" /> <input type="submit" ng-click="sendWords()" />
 	</form>
 </div>
+<div class="answers">
+	<div ng-repeat="answer in answers">
+		{{ answer.name }} : {{ answer.value }}
+	</div>
+</div>
