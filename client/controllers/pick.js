@@ -88,7 +88,7 @@ angular.module('Music-Dictators').controller('pickSelectionCtrl', function ($sco
     $scope.pick = function (pick) {
         if (!pick.enabled) return false;
 
-        socket.emit('pickDone', pick.id);
+        socket.emit('pickDone', pick.pickId);
 
     };
 

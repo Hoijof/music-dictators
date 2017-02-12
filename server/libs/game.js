@@ -14,6 +14,8 @@ function Game(io, gameId, team1, team2) {
         speed: 0
     };
 
+    game.politics = politics;
+
     game.staticBallTime = 0;
     game.timeLeft = 4;
 
@@ -77,7 +79,7 @@ function Game(io, gameId, team1, team2) {
         io.to(teamId).emit('loadPicks', {
             team: team,
             enemy: enemy,
-            picks: politics[ideology]
+            picks: game.politics[ideology]
         })
     }
 
@@ -89,11 +91,11 @@ function Game(io, gameId, team1, team2) {
     }
 
     function setEnablePicks(ideology, team) {
-        politics[ideology].forEach(function(politic) {
-            politics.enabled = true
+        game.politics[ideology].forEach(function(politic) {
+            politic.enabled = true
             team.forEach(function(hero){
                 if(politic === hero) {
-                    politics.enabled = false
+                    politic.enabled = false
                 }
             })
         })
