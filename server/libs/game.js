@@ -46,14 +46,17 @@ function Game (io, gameId, team1, team2) {
     socket.emit('loadSong', game.round.song.id);
   }
 
+  function playNexSong() {
+    game.round.changeSong();
+    io.to(game.id).emit('loadSong', game.round.song.id);
+    setTimeout(function () {
+      io.to(game.id).emit('playSong');
+    }, 1000);
+  }
   function newWord (teamId, word, player, callback) {
     var result = checkWord(word, player);
     if (game.round.song.allAnswered === true) {
-      game.round.changeSong();
-      io.to(game.id).emit('loadSong', game.round.song.id);
-      setTimeout(function () {
-        io.to(game.id).emit('playSong');
-      }, 1000);
+      playNexSong();
     }
     if (result === true) {
       if (teamId === team1.id) {
@@ -91,11 +94,29 @@ function Game (io, gameId, team1, team2) {
           game.ball.speed = parseInt((game.ball.speed/2) * -1);
           if (game.ball.speed === 0) {
             if (player.teamId === game.teams[0]) {
-              if (game.ball.speed > 0) game.ball.speed = 1;
+              game.ball.speed = 1;
             } else {
-              if (game.ball.speed < 0) game.ball.speed = -1;
+              game.ball.speed = -1;
             }
           }
+          break;
+        case 7:
+          playNexSong();
+          break;
+        case 8:
+          if (player.teamId === game.teams[0]) {
+            game.ball.position += 200;
+          } else {
+            game.ball.position -= 200;
+          }
+
+          setTimeout(function(){
+            if (player.teamId === game.teams[0]) {
+              game.ball.position -= 400;
+            } else {
+              game.ball.position += 400;
+            }
+          }, 5000);
           break;
         default:
           game.ball.speed = 0;
