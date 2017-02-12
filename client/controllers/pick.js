@@ -12,22 +12,22 @@ angular.module('Music-Dictators').controller('pickSelectionCtrl', function($scop
   $scope.portraits = {
     team: [
       {
-        url: 'img/poli/hitler.jpeg',
-        pickId: 0
+        url: 'img/dunno.jpg',
+        pickId: -1
       },
       {
-        url: 'img/poli/marx.jpeg',
-        pickId: 1
+        url: 'img/dunno.jpg',
+        pickId: -1
       }
     ],
     enemy: [
       {
-        url: 'img/poli/hitler.jpeg',
-        pickId: 0
+        url: 'img/dunno.jpg',
+        pickId: -1
       },
       {
-        url: 'img/poli/marx.jpeg',
-        pickId: 1
+        url: 'img/dunno.jpg',
+        pickId: -1
       }
     ],
     picks:
@@ -39,7 +39,8 @@ angular.module('Music-Dictators').controller('pickSelectionCtrl', function($scop
   socket.con();
 
 
-  socket.on('loadPicks', function(picks) {
+  socket.on('loadPicks', function(portraits) {
+    $scope.portraits = portraits;
     $scope.picks = [
       {
         "name": "Rajoy",
